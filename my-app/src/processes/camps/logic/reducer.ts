@@ -1,5 +1,6 @@
 import { Reducer } from 'redux';
 import { Action, ActionTypes, State } from './types';
+import { stat } from 'fs';
 
 const initialState: State = {
 	draftCamp: {
@@ -96,7 +97,8 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 			if (action.hasError) return state;
 			return {
 				...state,
-				camps: state.camps.filter(x => x.id != action.campId)
+				camps: state.camps.filter(x => x.id != action.campId),
+				totalCount: state.totalCount - 1,
 			};
 
 		default:

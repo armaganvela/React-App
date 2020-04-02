@@ -121,7 +121,7 @@ export default function CustomTable(props: CustomTableProps) {
         <TableHead>
           <TableRow>
             {titles.map((title: string) =>
-              <TableCell>{title}</TableCell>
+              <TableCell key={title}>{title}</TableCell>
             )}
           </TableRow>
         </TableHead>
@@ -130,7 +130,7 @@ export default function CustomTable(props: CustomTableProps) {
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: 25 }]}
+                rowsPerPageOptions={[5, 10, 25]}
                 colSpan={3}
                 count={count}
                 rowsPerPage={pageSize}
