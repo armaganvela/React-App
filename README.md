@@ -1,0 +1,2 @@
+# React-App
+React CRUD App with ASP.NET API including paging. I used Token Based Authentication to make clients authorized. When started the react app, it is met with Login Page. I added new identity user in seed method in ASP.NET API. You can replace it with what you want identity user. After making update-database, you can login the app the user name and password you choosed. Also I added new objects in seed method called Camp for paging and CRUD operation.
