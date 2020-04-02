@@ -1,0 +1,5 @@
+C:\Users\user\Desktop\CarBusinessSystem\RepositoryInterfaces\bin\Debug\RepositoryInterfaces.dll
+C:\Users\user\Desktop\CarBusinessSystem\RepositoryInterfaces\bin\Debug\RepositoryInterfaces.pdb
+C:\Users\user\Desktop\CarBusinessSystem\RepositoryInterfaces\obj\Debug\RepositoryInterfaces.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\CarBusinessSystem\RepositoryInterfaces\obj\Debug\RepositoryInterfaces.dll
+C:\Users\user\Desktop\CarBusinessSystem\RepositoryInterfaces\obj\Debug\RepositoryInterfaces.pdb

@@ -1,0 +1,16 @@
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\Core.dll.config
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\Core.dll
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\Core.pdb
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\EntityFramework.dll
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\EntityFramework.xml
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\user\Desktop\CarBusinessSystem\Core\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\user\Desktop\CarBusinessSystem\Core\obj\Debug\Core.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\CarBusinessSystem\Core\obj\Debug\Core.csproj.CopyComplete
+C:\Users\user\Desktop\CarBusinessSystem\Core\obj\Debug\Core.dll
+C:\Users\user\Desktop\CarBusinessSystem\Core\obj\Debug\Core.pdb
+C:\Users\user\Desktop\CarBusinessSystem\Core\obj\Debug\Core.csprojAssemblyReference.cache
