@@ -1,0 +1,2 @@
+# React-App
+I showed the react template i use in the my web projects. So i prepared a simple ASP.NET project. I used Token Based Authentication to make clients authorized. When started the react app, it is met with Login Page. I added new identity user in seed method in ASP.NET API. You can replace it with what you want identity user. After making update-database, you can login the app the user name and password you choosed. Also I added new objects called Camp in seed method for paging and CRUD operation.  I can response questions about project or React js
