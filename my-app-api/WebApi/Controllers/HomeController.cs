@@ -43,12 +43,14 @@ namespace WebApi.Controllers
         [HttpPost]
         public void AddCamp(CampBindingModel bindingModel)
         {
-            Camp camp = new Camp()
+            Country country = null;
+
+            if (bindingModel.CountryId.HasValue)
             {
-                EventDate = bindingModel.EventDate,
-                Moniker = bindingModel.Moniker,
-                Name = bindingModel.Name,
-            };
+                country = _repository.GetCountry(bindingModel.CountryId.Value);
+            }
+
+            Camp camp = Camp.NewInstance(bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country);
 
             _repository.AddCamp(camp);
         }
@@ -57,20 +59,21 @@ namespace WebApi.Controllers
         [HttpPost]
         public void UpdateCamp(CampBindingModel bindingModel)
         {
+            Country country = null;
+
+            if (bindingModel.CountryId.HasValue)
+            {
+                country = _repository.GetCountry(bindingModel.CountryId.Value);
+            }
+
             Camp camp = _repository.GetCamp(bindingModel.CampId);
 
             if (camp == null)
                 new BusinessRuleException("Camp is not found");
 
-            Camp campToUpdated = new Camp()
-            {
-                CampId = bindingModel.CampId,
-                EventDate = bindingModel.EventDate,
-                Moniker = bindingModel.Moniker,
-                Name = bindingModel.Name,
-            };
+            Camp newCamp = camp.Update(bindingModel.CampId, bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country);
 
-            _repository.UpdateCamp(campToUpdated);
+            _repository.UpdateCamp(newCamp);
         }
 
         [Route("getCamp")]
@@ -92,11 +95,19 @@ namespace WebApi.Controllers
 
             if (camp == null)
                 throw new BusinessRuleException("Camp is not found");
-
             _repository.DeleteCamp(camp);
 
             return Ok();
 
+        }
+
+        [Route("getAllCountries")]
+        [HttpGet]
+        public IHttpActionResult GetAllCountries()
+        {
+            List<Country> countries = _repository.GetAllCountries();
+
+            return Ok(countries);
         }
     }
 }

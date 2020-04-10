@@ -19,7 +19,7 @@ namespace WebApi.Infrastucture
                 BusinessRuleException ex = context.Exception as BusinessRuleException;
                 throw new HttpResponseException(context.Request.CreateErrorResponse(HttpStatusCode.BadRequest, context.Exception.Message));
             }
-            
+
             throw new HttpResponseException(context.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, context.Exception.InnerException?.Message ?? context.Exception.Message));
         }
     }

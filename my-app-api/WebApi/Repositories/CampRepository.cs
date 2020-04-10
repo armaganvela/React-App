@@ -30,7 +30,7 @@ namespace WebApi.Repositories
         public PagingModel<Camp> FetchCamps(int pageNumber, int pageSize)
         {
             int totalCount = _context.Camps.Count();
-            List<Camp> camps = _context.Camps.ToList().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            List<Camp> camps = _context.Camps.Include(camp => camp.Country).ToList().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
 
             return new PagingModel<Camp>
             {
@@ -38,7 +38,7 @@ namespace WebApi.Repositories
                 TotalCount = totalCount
             };
         }
-        
+
         public Camp AddCamp(Camp camp)
         {
             _context.Camps.Add(camp);
@@ -62,7 +62,7 @@ namespace WebApi.Repositories
 
         public Camp GetCamp(int id)
         {
-            return _context.Camps.FirstOrDefault(x => x.CampId == id);
+            return _context.Camps.Include(x => x.Country).FirstOrDefault(x => x.CampId == id);
         }
 
         public void DeleteCamp(Camp camp)
@@ -70,6 +70,28 @@ namespace WebApi.Repositories
             _context.Camps.Remove(camp);
 
             _context.SaveChanges();
+        }
+
+        public Country AddCountry(Country country)
+        {
+            Country newCountry = _context.Countries.Add(country);
+            _context.SaveChanges();
+
+            return newCountry;
+        }
+
+        public List<Country> GetAllCountries()
+        {
+            IQueryable<Country> query = _context.Countries;
+            // Order It
+            query = query.OrderByDescending(c => c.Name);
+
+            return query.ToList();
+        }
+
+        public Country GetCountry(int id)
+        {
+            return _context.Countries.FirstOrDefault(x => x.Id == id);
         }
     }
 }

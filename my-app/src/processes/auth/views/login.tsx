@@ -1,7 +1,7 @@
-import React, { FormEvent, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from '../../../config/store';
 import { changeName, changePassword, login } from '../logic/actions';
-import { FormControl, InputLabel, Input, TextField, Container, Button } from '@material-ui/core';
+import TextInput from '../../../components/FormComponents/TextInput';
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -26,19 +26,28 @@ const Login = () => {
         <form
             onSubmit={onLoginClick}
         >
-                <TextField id="standard-basic" label="Name" value={name} onChange={onNameChange} />
-                <br />
-                <TextField id="standard-basic" label="Password" value={password} onChange={onPasswordChange} />
-                <br />
-                <Button type="submit" color="primary" onClick={onLoginClick}>
-                    Login
-                </Button>
+             <h2>Login</h2>
+            <TextInput
+                label="Name"
+                value={name}
+                onChange={onNameChange}
+                placeholder="Name"
+            />
+            <TextInput
+                label="Password"
+                value={password}
+                onChange={onPasswordChange}
+                placeholder="Password"
+            />
+            <button type="submit" className="btn btn-primary">
+                Login
+            </button>
         </form>
     );
 };
 
 Login.layoutConfig = {
-    layout : 'AuthLayout'
+    layout: 'AuthLayout'
 }
 
 export default Login;

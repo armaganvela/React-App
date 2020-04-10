@@ -7,12 +7,14 @@ const initialState: State = {
 		id: '',
 		name: '',
 		moniker: '',
-		eventDate: '',
+		eventDate: undefined,
+		country: undefined,
 	},
 
 	camps: [],
+	countries: [],
 	totalCount: 0,
-	pageNumber: 0,
+	pageNumber: 1,
 	pageSize: 5,
 
 	openModal: false,
@@ -24,7 +26,6 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 			return {
 				...state,
 				pageNumber: action.pageNumber,
-				pageSize: action.pageSize,
 			};
 
 		case ActionTypes.fetch_camps_result:
@@ -33,6 +34,13 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 				...state,
 				camps: action.camps!,
 				totalCount: action.totalCount!,
+			};
+
+		case ActionTypes.fetch_countries_result:
+			if (action.hasError) return state;
+			return {
+				...state,
+				countries: action.countries!,
 			};
 
 		case ActionTypes.get_camp_result:
@@ -57,6 +65,15 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 				draftCamp: {
 					...state.draftCamp,
 					moniker: action.monikerName
+				}
+			};
+
+		case ActionTypes.change_draft_country:
+			return {
+				...state,
+				draftCamp: {
+					...state.draftCamp,
+					country: action.country
 				}
 			};
 

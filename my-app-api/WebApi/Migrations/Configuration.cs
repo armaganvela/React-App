@@ -3,6 +3,7 @@ namespace WebApi.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -46,20 +47,32 @@ namespace WebApi.Migrations
 
             manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
 
-            CampRepository campRepository = new CampRepository(context);
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2020", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2019", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2018", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2017", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2016", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2015", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2014", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2013", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2012", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2011", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2010", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2009", Name = "ATLANTA CAMPING" });
-            campRepository.AddCamp(new Camp() { EventDate = DateTime.Now, Moniker = "ATL2008", Name = "ATLANTA CAMPING" });
+            context.Camps.AddOrUpdate(r => r.Moniker, new List<Camp>
+            {
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2020", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2019", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2018", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2017", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2016", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2015", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2014", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2013", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2012", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2011", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2010", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2009", Name = "ATLANTA CAMPING" },
+                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2008", Name = "ATLANTA CAMPING" },
+        }.ToArray());
+
+            context.Countries.AddOrUpdate(r => r.Name, new List<Country>
+            {
+                new Country() { Name = "Turkey" },
+                new Country() { Name = "England" },
+                new Country() { Name = "Germany" },
+        }.ToArray());
+
+            context.SaveChanges();
+
         }
     }
 }

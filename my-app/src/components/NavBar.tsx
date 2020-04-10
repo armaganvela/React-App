@@ -6,8 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { useDispatch } from 'react-redux';
-import { clearAllStorage } from '../processes/storage/actions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,9 +21,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function ButtonAppBar() {
+interface Props{
+    onClickLogout: () => void
+}
+
+export default function NavBar(props: Props) {
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   return (
     <div className={classes.root}>
@@ -35,9 +36,9 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Camps
+            Example
           </Typography>
-          <Button color="inherit" onClick={()=>{dispatch(clearAllStorage())}}>Logout</Button>
+          <Button color="inherit" onClick={props.onClickLogout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>

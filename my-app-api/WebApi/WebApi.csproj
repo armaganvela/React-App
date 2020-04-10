@@ -216,8 +216,17 @@
     <Compile Include="Migrations\202004021145417_x1.Designer.cs">
       <DependentUpon>202004021145417_x1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004081339491_x2.cs" />
+    <Compile Include="Migrations\202004081339491_x2.Designer.cs">
+      <DependentUpon>202004081339491_x2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004081550328_x3.cs" />
+    <Compile Include="Migrations\202004081550328_x3.Designer.cs">
+      <DependentUpon>202004081550328_x3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Camp.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PagingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -251,6 +260,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202004021145417_x1.resx">
       <DependentUpon>202004021145417_x1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004081339491_x2.resx">
+      <DependentUpon>202004081339491_x2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004081550328_x3.resx">
+      <DependentUpon>202004081550328_x3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

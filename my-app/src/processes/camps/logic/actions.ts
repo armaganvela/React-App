@@ -4,15 +4,18 @@ import {
     ChangeDraftNameAction,
     ChangeDraftEventDateAction,
     ChangeDraftMonikerNameAction,
+    ChangeDraftEventCountryAction,
     SetDraftCampAction,
     GetCampAction,
     GetCampResultAction,
     FetchCampsAction,
     FetchCampsResultAction,
+    FetchCountriesResultAction,
     DeleteCampResultAction,
     DeleteCampAction,
     OpenDeleteModal,
     Camp,
+    Country,
 } from './types';
 
 export const changeDraftName = (name: string): ChangeDraftNameAction => ({
@@ -26,9 +29,14 @@ export const changeDraftMonikerName = (monikerName: string): ChangeDraftMonikerN
 });
 
 
-export const changeDraftEventDate = (eventDate: string): ChangeDraftEventDateAction => ({
+export const changeDraftEventDate = (eventDate?: Date): ChangeDraftEventDateAction => ({
     type: ActionTypes.change_draft_event_date,
     eventDate
+});
+
+export const changeDraftCoutry = (country?: Country): ChangeDraftEventCountryAction => ({
+    type: ActionTypes.change_draft_country,
+    country
 });
 
 export const setDraftCamp = (camp: Camp): SetDraftCampAction => ({
@@ -45,10 +53,9 @@ export const getCamp = (campId: string): GetCampAction => ({
     campId,
 });
 
-export const fetchCamps = (pageNumber: number, pageSize: number): FetchCampsAction => ({
+export const fetchCamps = (pageNumber: number): FetchCampsAction => ({
     type: ActionTypes.fetch_camps,
     pageNumber,
-    pageSize,
 });
 
 export const fetchCampsResult = (hasError: boolean, camps?: [], totalCount?: number): FetchCampsResultAction => ({
@@ -56,6 +63,16 @@ export const fetchCampsResult = (hasError: boolean, camps?: [], totalCount?: num
 	hasError,
 	camps,
 	totalCount,
+});
+
+export const fetchCountries = (): AppAction => ({
+	type: ActionTypes.fetch_countries,
+});
+
+export const fetchCountriesResult = (hasError: boolean, countries?: []): FetchCountriesResultAction => ({
+	type: ActionTypes.fetch_countries_result,
+	hasError,
+	countries,
 });
 
 export const deleteCamp = (campId: string): DeleteCampAction => ({

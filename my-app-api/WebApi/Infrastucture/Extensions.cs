@@ -17,8 +17,6 @@ namespace WebApi.Infrastucture
 
     public static class Mapper
     {
-
-
         public static CampBindingModel ToCampBindingModel(this Camp model)
         {
             var result = new CampBindingModel
@@ -26,7 +24,9 @@ namespace WebApi.Infrastucture
                 CampId = model.CampId,
                 Name = model.Name,
                 Moniker = model.Moniker,
-                EventDate = model.EventDate
+                EventDate = model.EventDate,
+                CountryId = model.Country?.Id,
+                Country = model.Country
             };
 
             return result;

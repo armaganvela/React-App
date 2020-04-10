@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Edit, Delete, AddCircle } from '@material-ui/icons';
-import CustomTable from '../../../components/Table';
-import Modal from '../../../components/Modal';
 import { useSelector, useDispatch } from '../../../config/store';
 import { history } from '../../../config/router';
 import { fetchCamps, openDeleteModal, deleteCamp } from '../logic/actions';
-import { TableBody, TableRow, TableCell, TableHead, IconButton } from '@material-ui/core';
+import CampList from './CampList';
+import TableContainer from '../../../components/Containers/TableContainer';
+import ModalExample from '../../../components/Modal';
+import { Spinner } from 'reactstrap';
 
 const Camps = () => {
   const [campIdToDelete, setCampIdToDelete] = useState('');
@@ -13,22 +13,17 @@ const Camps = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCamps(0, pageSize));
+    dispatch(fetchCamps(1));
   }, []);
 
   const camps = useSelector(state => state.camp.camps);
   const pageNumber = useSelector(state => state.camp.pageNumber);
-  const pageSize = useSelector(state => state.camp.pageSize);
   const totalCount = useSelector(state => state.camp.totalCount);
   const openModal = useSelector(state => state.camp.openModal);
 
   const onChangePageNumber = useCallback((pageNumber: number) => {
-    dispatch(fetchCamps(pageNumber, pageSize));
-  }, [pageSize, pageSize]);
-
-  const onChangePageSize = useCallback((pageSize: number) => {
-    dispatch(fetchCamps(0, pageSize));
-  }, [pageSize]);
+    dispatch(fetchCamps(pageNumber));
+  }, [pageNumber]);
 
   const onClickEditCamp = useCallback((campId: string) => {
     history.push(`/camps/edit/${campId}`);
@@ -48,53 +43,17 @@ const Camps = () => {
   }, []);
 
   const onClickDeleteCamp = useCallback(() => {
-     dispatch(deleteCamp(campIdToDelete));
+    dispatch(deleteCamp(campIdToDelete));
   }, [campIdToDelete]);
 
-  const renderCamps = useMemo(() => (
-    totalCount > 0 &&
-    <>
-      <TableBody>
-        {camps.map((camp) => (
-          <TableRow key={camp.id}>
-            <TableCell component="th" scope="row">
-              {camp.name}
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {camp.moniker}
-            </TableCell>
-            <TableCell component="th" scope="row">
-              {camp.eventDate}
-            </TableCell>
-            <TableCell>
-              <IconButton onClick={() => onClickEditCamp(camp.id)}>
-                <Edit color="primary" />
-              </IconButton>
-              <IconButton onClick={() => onOpenDeleteModal(camp.id)}>
-                <Delete color="primary" />
-              </IconButton>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </>
-  ), [camps]);
+  const renderActions = <button style={{ marginBottom: 20 }} className="btn btn-primary" onClick={onClickAddCamp}>Add Camp</button>;
 
   return (
     <>
-      <IconButton onClick={onClickAddCamp}>
-        <AddCircle color="primary" />
-      </IconButton>
-      <CustomTable
-        titles={['Name', 'Moniker','Event Date', 'Options']}
-        count={totalCount}
-        pageNumber={pageNumber}
-        pageSize={pageSize}
-        onChangePageNumber={onChangePageNumber}
-        onChangePageSize={onChangePageSize}>
-        {renderCamps}
-      </CustomTable>
-      <Modal openModal={openModal} onClickCloseModal={onClickCloseDeleteModal} onClickDelete={onClickDeleteCamp} />
+      <TableContainer title="Camps" actions={renderActions} pageNumber={pageNumber} totalCount={totalCount} onChangePageNumber={onChangePageNumber}>
+        <CampList camps={camps} onEditClick={onClickEditCamp} onOpenDeleteModalClick={onOpenDeleteModal} />
+      </TableContainer>
+      <ModalExample closeModel={onClickCloseDeleteModal} isOpen={openModal} onClickDelete={onClickDeleteCamp} />
     </>
   );
 };

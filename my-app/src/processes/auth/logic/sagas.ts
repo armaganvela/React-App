@@ -9,7 +9,7 @@ import {
 import {
 	loginResult,
 } from './actions';
-import { changeAccessToken, changeIsLoggedIn } from '../../storage/actions';
+import { changeAccessToken, changeIsLoggedIn, clearAllStorage } from '../../storage/actions';
 import {
 	clearAlert,
 	hideProgress,
@@ -43,7 +43,7 @@ function* signInSaga() {
 }
 
 function* logoutSaga() {
-	yield put(navigate('Dashboard'));
+	yield put(clearAllStorage());
 }
 
 export default [

@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { LayoutProps } from './Layout';
-import AppBar from '../components/AppBar';
-import SnackBar from '../components/Snackbar'
-import { Container } from '@material-ui/core';
 import { useDispatch, useSelector } from '../config/store';
 import { clearAlert } from '../processes/services/logic/actions';
+import CustomizedSnackbars from '../components/Toast';
+import NavBar from '../components/NavBar';
+import { logout } from '../processes/auth/logic/actions';
 
 const MainLayout = (props: LayoutProps) => {
 	const { children } = props;
@@ -19,13 +19,17 @@ const MainLayout = (props: LayoutProps) => {
 		dispatch(clearAlert());
 	}, []);
 
-	return <div className='main-layout'>
-		<AppBar />
-		<SnackBar visible={visible} message={message} onCloseSnackbar={onCloseSnackbar} alertType={type} />
-		<Container>
+	const onClickLogout = () => {
+		dispatch(logout());
+	}
+
+	return <>
+		<NavBar onClickLogout={onClickLogout} />
+		<div className="container-fluid" style={{maxWidth: '1000px'}}> 
 			{children}
-		</Container>
-	</div>;
+		</div>
+		<CustomizedSnackbars alertType={type} message={message} onCloseSnackbar={onCloseSnackbar} visible={visible} />
+	</>;
 };
 
 export default MainLayout;

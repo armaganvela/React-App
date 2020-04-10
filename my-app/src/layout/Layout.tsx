@@ -21,7 +21,7 @@ const Layout = (props: LayoutProps) => {
 
 	useEffect(() => {
 		if (!isLoggedIn) {
-		  history.replace('Login');	
+		  history.push('/Login');	
 		}
 	}, [isLoggedIn]);
 

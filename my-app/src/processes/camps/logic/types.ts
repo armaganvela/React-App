@@ -4,6 +4,8 @@ export enum ActionTypes {
 	change_draft_name = 'CHANGE_DRAFT_NAME',
 	change_draft_moniker_name = 'CHANGE_DRAFT_MONIKER_NAME',
 	change_draft_event_date = 'CHANGE_DRAFT_EVENT_DATE',
+	change_draft_country = 'CHANGE_DRAFT_COUNTRY',
+
 	set_draft_camp = 'SET_DRAFT_CAMP',
 	clear_draft_camp = 'CLEAR_DRAFT_CAMP',
 
@@ -15,6 +17,9 @@ export enum ActionTypes {
 
 	fetch_camps = 'FETCH_CAMPS',
 	fetch_camps_result = 'FETCH_CAMPS_RESULT',
+
+	fetch_countries = 'FETCH_COUNTRIES',
+	fetch_countries_result = 'FETCH_COUNTRIES_RESULT',
 
 	delete_camp = 'DELETE_CAMP',
 	delete_camp_result = 'DELETE_CAMP_RESULT',
@@ -34,7 +39,12 @@ export interface ChangeDraftMonikerNameAction extends AppAction {
 
 export interface ChangeDraftEventDateAction extends AppAction {
 	type: ActionTypes.change_draft_event_date,
-	eventDate: string;
+	eventDate?: Date;
+}
+
+export interface ChangeDraftEventCountryAction extends AppAction {
+	type: ActionTypes.change_draft_country,
+	country?: Country;
 }
 
 export interface SetDraftCampAction extends AppAction {
@@ -55,13 +65,17 @@ export interface GetCampResultAction extends AppResultAction {
 export interface FetchCampsAction extends AppAction {
 	type: ActionTypes.fetch_camps;
 	pageNumber: number;
-	pageSize: number;
 }
 
 export interface FetchCampsResultAction extends AppResultAction {
 	type: ActionTypes.fetch_camps_result;
 	camps?: Camp[];
 	totalCount?: number;
+}
+
+export interface FetchCountriesResultAction extends AppResultAction {
+	type: ActionTypes.fetch_countries_result;
+	countries?: Country[];
 }
 
 export interface OpenDeleteModal extends AppAction {
@@ -83,7 +97,13 @@ export interface Camp {
 	id: string;
 	name: string;
 	moniker: string;
-	eventDate: string;
+	eventDate?: Date;
+	country?: Country;
+}
+
+export interface Country {
+	id: string;
+	name: string;
 }
 
 export type Action =
@@ -91,11 +111,13 @@ export type Action =
 	& ChangeDraftNameAction
 	& ChangeDraftMonikerNameAction
 	& ChangeDraftEventDateAction
+	& ChangeDraftEventCountryAction
 	& SetDraftCampAction
 	& GetCampAction
 	& GetCampResultAction
 	& FetchCampsAction
 	& FetchCampsResultAction
+	& FetchCountriesResultAction
 	& DeleteCampAction
 	& DeleteCampResultAction
 	& OpenDeleteModal;
@@ -104,6 +126,7 @@ export interface State {
     draftCamp: Camp;
 
 	camps: Camp[];
+	countries: Country[];
 	totalCount: number;
 	pageNumber: number;
 	pageSize: number;

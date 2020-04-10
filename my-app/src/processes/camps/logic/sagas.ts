@@ -2,13 +2,14 @@ import { all, call, put, select, takeLatest } from 'redux-saga/effects';
 import { AppState } from '../../../config/store/types';
 import { history } from '../../../config/router';
 import {
-    fetchCampsResult,
+	fetchCampsResult,
 	setDraftCamp,
 	deleteCampResult,
 	openDeleteModal,
+	fetchCountriesResult,
 } from './actions';
 import { ActionTypes, GetCampAction, DeleteCampAction } from './types';
-import { getCampsApi, getCampApi, addCampApi, updateCampApi, deleteCampApi } from './api';
+import { getCampsApi, getCampApi, addCampApi, updateCampApi, deleteCampApi, getCountriesApi } from './api';
 import {
 	hideProgress,
 	showProgress,
@@ -20,9 +21,9 @@ function* fetchCampsSaga() {
 	try {
 		yield put(showProgress(""));
 
-		const { pageSize, pageNumber } = yield select((state: AppState) => state.camp);
+		const { pageNumber } = yield select((state: AppState) => state.camp);
 
-		const response = yield call(getCampsApi, pageSize, pageNumber);
+		const response = yield call(getCampsApi, pageNumber);
 		yield put(fetchCampsResult(false, response.items, response.totalCount));
 	} catch (e) {
 		yield put(fetchCampsResult(true));
@@ -35,13 +36,13 @@ function* addCampSaga() {
 	try {
 		yield put(showProgress(""));
 
-		const { name, moniker, eventDate } = yield select((state: AppState) => state.camp.draftCamp);
+		const { name, moniker, eventDate, country } = yield select((state: AppState) => state.camp.draftCamp);
 
-		yield call(addCampApi, name, moniker, eventDate);
+		yield call(addCampApi, name, moniker, eventDate, country);
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		history.push('/');
 	} catch (e) {
-		yield(put(showHttpErrorAlert(e)));
+		yield (put(showHttpErrorAlert(e)));
 	} finally {
 		yield put(hideProgress());
 	}
@@ -52,13 +53,13 @@ function* updateCampSaga() {
 	try {
 		yield put(showProgress(""));
 
-		const { id, name, moniker, eventDate } = yield select((state: AppState) => state.camp.draftCamp);
+		const { id, name, moniker, eventDate, country } = yield select((state: AppState) => state.camp.draftCamp);
 
-		yield call(updateCampApi, id, name, moniker, eventDate);
+		yield call(updateCampApi, id, name, moniker, eventDate, country);
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		history.push('/');
 	} catch (e) {
-		yield(put(showHttpErrorAlert(e)));
+		yield (put(showHttpErrorAlert(e)));
 	} finally {
 		yield put(hideProgress());
 	}
@@ -74,7 +75,7 @@ function* getCampSaga(action: GetCampAction) {
 		const response = yield call(getCampApi, campId);
 		yield put(setDraftCamp(response));
 	} catch (e) {
-		yield(put(showHttpErrorAlert(e)));
+		yield (put(showHttpErrorAlert(e)));
 	} finally {
 		yield put(hideProgress());
 	}
@@ -91,15 +92,26 @@ function* deleteCampSaga(action: DeleteCampAction) {
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		yield put(openDeleteModal(false));
 	} catch (e) {
-		yield(put(showHttpErrorAlert(e)));
+		yield (put(showHttpErrorAlert(e)));
 		yield put(deleteCampResult(true));
 	} finally {
 		yield put(hideProgress());
 	}
 }
 
+function* fetchCountriesSaga() {
+	try {
+		const response = yield call(getCountriesApi);
+		yield put(fetchCountriesResult(false, response));
+	} catch (e) {
+		yield put(fetchCountriesResult(true));
+	} finally {
+	}
+}
+
 export default [
 	takeLatest(ActionTypes.fetch_camps, fetchCampsSaga),
+	takeLatest(ActionTypes.fetch_countries, fetchCountriesSaga),
 	takeLatest(ActionTypes.get_camp, getCampSaga),
 	takeLatest(ActionTypes.add_camp, addCampSaga),
 	takeLatest(ActionTypes.update_camp, updateCampSaga),

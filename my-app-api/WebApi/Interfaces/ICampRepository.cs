@@ -20,5 +20,11 @@ namespace WebApi.Interfaces
         void DeleteCamp(Camp camp);
 
         PagingModel<Camp> FetchCamps(int pageNumber, int pageSize);
+
+        Country AddCountry(Country country);
+
+        Country GetCountry(int id);
+
+        List<Country> GetAllCountries();
     }
 }

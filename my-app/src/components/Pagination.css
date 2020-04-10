@@ -1,0 +1,25 @@
+.pagination li {
+    padding: 4px 12px;
+    border: 1px solid #ddd;
+    margin-right: 2px;
+    color: #777;
+    cursor: pointer;
+}
+
+.pagination li.active, .pagination li:hover {
+    background-color: #267494;
+    color: #fff;
+}
+
+.pagination li.active a {
+    color: white;
+}
+
+.pagination li:hover a {
+    color: white;
+}
+
+.pagination li a {
+    color: #777;
+    cursor: pointer;
+}

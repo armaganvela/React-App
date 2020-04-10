@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using WebApi.Models;
 
 namespace WebApi.BindingModels
 {
@@ -16,8 +17,11 @@ namespace WebApi.BindingModels
         [Required(ErrorMessage = "Moniker is required")]
         public string Moniker { get; set; }
 
-        [Required(ErrorMessage = "Event Date is required")]
-        public DateTime EventDate { get; set; }
+        public DateTime? EventDate { get; set; }
+
+        public Country Country { get; set; }
+
+        public int? CountryId { get; set; }
     }
 
     public class DeleteCampBindingModel
