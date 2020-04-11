@@ -6,6 +6,7 @@ import TextInput from '../../../components/FormComponents/TextInput';
 import FormContainer from '../../../components/Containers/FormContainer';
 import SelectInput from '../../../components/FormComponents/SelectInput';
 import DateTimePicker from '../../../components/FormComponents/DateTimePicker';
+import Spinner from '../../../components/Spinner';
 
 const AddEditCamp = () => {
     const monikerName = useSelector(state => state.camp.draftCamp.moniker);
@@ -15,6 +16,7 @@ const AddEditCamp = () => {
     const camps = useSelector(state => state.camp.camps);
     const countries = useSelector(state => state.camp.countries);
     const country = useSelector(state => state.camp.draftCamp.country);
+    const visible = useSelector(state => state.services.progress.visible);
 
     const dispatch = useDispatch();
 
@@ -67,31 +69,36 @@ const AddEditCamp = () => {
 
     return (
         <>
-            <FormContainer onSubmit={isEditing ? onUpdateCamp : onAddCamp} title={isEditing ? "Edit" : "Add"}>
-                <TextInput
-                    label="Name"
-                    value={name}
-                    onChange={onNameChange}
-                    placeholder="Name"
-                />
-                <TextInput
-                    label="Moniker Name"
-                    value={monikerName}
-                    onChange={onMonikerNameChange}
-                    placeholder="Moniker Name"
-                />
-                <SelectInput
-                    options={countries.map(country => ({
-                        value: country.id,
-                        text: country.name
-                    }))}
-                    label="Countries"
-                    value={country ? country.id : ''}
-                    onChange={onCountryChange}
-                    defaultOption="-Select Country--"
-                />
-                <DateTimePicker date={eventDate} onChangeDateTime={onChangeEventDate} />
-            </FormContainer>
+            {visible &&
+                <Spinner />
+            }
+            {!visible &&
+                <FormContainer onSubmit={isEditing ? onUpdateCamp : onAddCamp} title={isEditing ? "Edit" : "Add"}>
+                    <TextInput
+                        label="Name"
+                        value={name}
+                        onChange={onNameChange}
+                        placeholder="Name"
+                    />
+                    <TextInput
+                        label="Moniker Name"
+                        value={monikerName}
+                        onChange={onMonikerNameChange}
+                        placeholder="Moniker Name"
+                    />
+                    <SelectInput
+                        options={countries.map(country => ({
+                            value: country.id,
+                            text: country.name
+                        }))}
+                        label="Countries"
+                        value={country ? country.id : ''}
+                        onChange={onCountryChange}
+                        defaultOption="-Select Country--"
+                    />
+                    <DateTimePicker date={eventDate} onChangeDateTime={onChangeEventDate} />
+                </FormContainer>
+            }
         </>
     );
 };

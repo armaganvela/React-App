@@ -13,6 +13,8 @@ namespace WebApi.Models
 
         public DbSet<Camp> Camps { get; set; }
         public DbSet<Country> Countries { get; set; }
+        public DbSet<Talk> Talks { get; set; }
+        public DbSet<Speaker> Speakers { get; set; }
 
         public static AppUsersDbContext Create()
         {

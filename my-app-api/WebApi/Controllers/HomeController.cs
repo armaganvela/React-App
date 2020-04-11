@@ -10,6 +10,7 @@ using WebApi.BindingModels;
 using WebApi.Infrastucture;
 using WebApi.Interfaces;
 using WebApi.Models;
+using WebApi.Repositories;
 
 namespace WebApi.Controllers
 {
@@ -106,6 +107,15 @@ namespace WebApi.Controllers
         public IHttpActionResult GetAllCountries()
         {
             List<Country> countries = _repository.GetAllCountries();
+
+            return Ok(countries);
+        }
+
+        [Route("getByMonikerName")]
+        [HttpGet]
+        public IHttpActionResult GetByMonikerName()
+        {
+            List<Camp> countries = _repository.GetAllCampsAsync(true);
 
             return Ok(countries);
         }

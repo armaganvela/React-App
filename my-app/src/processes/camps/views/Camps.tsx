@@ -5,7 +5,7 @@ import { fetchCamps, openDeleteModal, deleteCamp } from '../logic/actions';
 import CampList from './CampList';
 import TableContainer from '../../../components/Containers/TableContainer';
 import ModalExample from '../../../components/Modal';
-import { Spinner } from 'reactstrap';
+import Spinner from '../../../components/Spinner';
 
 const Camps = () => {
   const [campIdToDelete, setCampIdToDelete] = useState('');
@@ -20,6 +20,8 @@ const Camps = () => {
   const pageNumber = useSelector(state => state.camp.pageNumber);
   const totalCount = useSelector(state => state.camp.totalCount);
   const openModal = useSelector(state => state.camp.openModal);
+
+  const visible = useSelector(state => state.services.progress.visible);
 
   const onChangePageNumber = useCallback((pageNumber: number) => {
     dispatch(fetchCamps(pageNumber));
@@ -50,9 +52,14 @@ const Camps = () => {
 
   return (
     <>
+    { visible &&
+      <Spinner />
+    }
+    {  !visible &&
       <TableContainer title="Camps" actions={renderActions} pageNumber={pageNumber} totalCount={totalCount} onChangePageNumber={onChangePageNumber}>
         <CampList camps={camps} onEditClick={onClickEditCamp} onOpenDeleteModalClick={onOpenDeleteModal} />
       </TableContainer>
+}
       <ModalExample closeModel={onClickCloseDeleteModal} isOpen={openModal} onClickDelete={onClickDeleteCamp} />
     </>
   );

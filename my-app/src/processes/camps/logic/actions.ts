@@ -7,7 +7,6 @@ import {
     ChangeDraftEventCountryAction,
     SetDraftCampAction,
     GetCampAction,
-    GetCampResultAction,
     FetchCampsAction,
     FetchCampsResultAction,
     FetchCountriesResultAction,

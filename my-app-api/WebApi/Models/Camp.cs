@@ -16,7 +16,9 @@ namespace WebApi.Models
         public string Moniker { get; set; }
         public DateTime? EventDate { get; set; }
 
-        public  Camp Update(int campId, string name, string monikerName, DateTime? eventDate, Country country)
+        public List<Talk> Talks { get; set; }
+
+        public Camp Update(int campId, string name, string monikerName, DateTime? eventDate, Country country)
         {
             CampId = campId;
             Name = name;

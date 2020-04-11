@@ -224,11 +224,17 @@
     <Compile Include="Migrations\202004081550328_x3.Designer.cs">
       <DependentUpon>202004081550328_x3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004101339451_x4.cs" />
+    <Compile Include="Migrations\202004101339451_x4.Designer.cs">
+      <DependentUpon>202004101339451_x4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Camp.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PagingModel.cs" />
+    <Compile Include="Models\Speaker.cs" />
+    <Compile Include="Models\Talk.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Repositories\CampRepository.cs" />
@@ -266,6 +272,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004081550328_x3.resx">
       <DependentUpon>202004081550328_x3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004101339451_x4.resx">
+      <DependentUpon>202004101339451_x4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

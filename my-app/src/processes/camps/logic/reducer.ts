@@ -114,7 +114,7 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 			if (action.hasError) return state;
 			return {
 				...state,
-				camps: state.camps.filter(x => x.id != action.campId),
+				camps: state.camps.filter(x => x.id !== action.campId),
 				totalCount: state.totalCount - 1,
 			};
 

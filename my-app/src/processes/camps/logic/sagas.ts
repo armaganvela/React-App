@@ -34,8 +34,6 @@ function* fetchCampsSaga() {
 
 function* addCampSaga() {
 	try {
-		yield put(showProgress(""));
-
 		const { name, moniker, eventDate, country } = yield select((state: AppState) => state.camp.draftCamp);
 
 		yield call(addCampApi, name, moniker, eventDate, country);
@@ -43,16 +41,12 @@ function* addCampSaga() {
 		history.push('/');
 	} catch (e) {
 		yield (put(showHttpErrorAlert(e)));
-	} finally {
-		yield put(hideProgress());
-	}
+	} 
 }
 
 
 function* updateCampSaga() {
 	try {
-		yield put(showProgress(""));
-
 		const { id, name, moniker, eventDate, country } = yield select((state: AppState) => state.camp.draftCamp);
 
 		yield call(updateCampApi, id, name, moniker, eventDate, country);
@@ -60,8 +54,6 @@ function* updateCampSaga() {
 		history.push('/');
 	} catch (e) {
 		yield (put(showHttpErrorAlert(e)));
-	} finally {
-		yield put(hideProgress());
 	}
 }
 
@@ -101,11 +93,13 @@ function* deleteCampSaga(action: DeleteCampAction) {
 
 function* fetchCountriesSaga() {
 	try {
+		yield put(showProgress(""));
 		const response = yield call(getCountriesApi);
 		yield put(fetchCountriesResult(false, response));
 	} catch (e) {
 		yield put(fetchCountriesResult(true));
 	} finally {
+		yield put(hideProgress());
 	}
 }
 

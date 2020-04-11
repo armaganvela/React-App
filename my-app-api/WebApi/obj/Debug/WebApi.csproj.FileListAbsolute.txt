@@ -785,3 +785,4 @@ C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.dll
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.pdb
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x2.resources
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x3.resources
+C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x4.resources
