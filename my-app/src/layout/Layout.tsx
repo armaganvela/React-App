@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { RouteName, history } from '../config/router';
 import { LayoutConfig } from './index';
 import AuthLayout from './AuthLayout';
@@ -21,7 +21,7 @@ const Layout = (props: LayoutProps) => {
 
 	useEffect(() => {
 		if (!isLoggedIn) {
-		  history.push('/Login');	
+			history.push('/Login');
 		}
 	}, [isLoggedIn]);
 

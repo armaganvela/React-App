@@ -12,6 +12,7 @@ const initialState: State = {
 		title: '',
 		message: '',
 	},
+	openDeleteModal: false,
 };
 
 const services: Reducer<State, Action> = (state = initialState, action) => {
@@ -46,6 +47,12 @@ const services: Reducer<State, Action> = (state = initialState, action) => {
 				...state,
 				alert: initialState.alert,
 			};
+
+		case ActionTypes.open_delete_modal:
+			return {
+				...state,
+				openDeleteModal: action.openModal
+			}
 		default:
 			return state;
 	}

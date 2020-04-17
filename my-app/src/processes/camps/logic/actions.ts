@@ -5,6 +5,7 @@ import {
     ChangeDraftEventDateAction,
     ChangeDraftMonikerNameAction,
     ChangeDraftEventCountryAction,
+    ChangeSearchEventDateAction,
     SetDraftCampAction,
     GetCampAction,
     FetchCampsAction,
@@ -12,7 +13,6 @@ import {
     FetchCountriesResultAction,
     DeleteCampResultAction,
     DeleteCampAction,
-    OpenDeleteModal,
     Camp,
     Country,
 } from './types';
@@ -38,6 +38,11 @@ export const changeDraftCoutry = (country?: Country): ChangeDraftEventCountryAct
     country
 });
 
+export const changeSearchEventDate = (eventDate?: Date): ChangeSearchEventDateAction => ({
+    type: ActionTypes.change_search_event_date,
+    eventDate
+});
+
 export const setDraftCamp = (camp: Camp): SetDraftCampAction => ({
     type: ActionTypes.set_draft_camp,
     camp
@@ -52,26 +57,27 @@ export const getCamp = (campId: string): GetCampAction => ({
     campId,
 });
 
-export const fetchCamps = (pageNumber: number): FetchCampsAction => ({
+export const fetchCamps = (pageNumber: number, eventDate?: Date): FetchCampsAction => ({
     type: ActionTypes.fetch_camps,
     pageNumber,
+    eventDate,
 });
 
 export const fetchCampsResult = (hasError: boolean, camps?: [], totalCount?: number): FetchCampsResultAction => ({
-	type: ActionTypes.fetch_camps_result,
-	hasError,
-	camps,
-	totalCount,
+    type: ActionTypes.fetch_camps_result,
+    hasError,
+    camps,
+    totalCount,
 });
 
 export const fetchCountries = (): AppAction => ({
-	type: ActionTypes.fetch_countries,
+    type: ActionTypes.fetch_countries,
 });
 
 export const fetchCountriesResult = (hasError: boolean, countries?: []): FetchCountriesResultAction => ({
-	type: ActionTypes.fetch_countries_result,
-	hasError,
-	countries,
+    type: ActionTypes.fetch_countries_result,
+    hasError,
+    countries,
 });
 
 export const deleteCamp = (campId: string): DeleteCampAction => ({
@@ -93,7 +99,7 @@ export const updateCamp = (): AppAction => ({
     type: ActionTypes.update_camp,
 });
 
-export const openDeleteModal = (openModal: boolean): OpenDeleteModal => ({
-    type: ActionTypes.open_delete_modal,
-    openModal,
+export const clearSearchCriteria = (): AppAction => ({
+    type: ActionTypes.clear_search_criteria,
 });
+

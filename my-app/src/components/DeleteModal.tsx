@@ -2,17 +2,18 @@ import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 interface Props {
+    title: string;
     isOpen: boolean;
     closeModel: () => void;
     onClickDelete: () => void;
 }
 
 
-const ModalExample = (props: Props) => {
+const DeleteModal = (props: Props) => {
     return (
         <div>
             <Modal isOpen={props.isOpen} toggle={props.closeModel}>
-                <ModalHeader>Modal title</ModalHeader>
+                <ModalHeader>{props.title}</ModalHeader>
                 <ModalBody>
                     Are you sure you want to delete ?
                 </ModalBody>
@@ -25,4 +26,4 @@ const ModalExample = (props: Props) => {
     );
 }
 
-export default ModalExample;
+export default DeleteModal;

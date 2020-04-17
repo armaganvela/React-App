@@ -13,15 +13,17 @@ namespace WebApi.Interfaces
 
         Camp AddCamp(Camp camp);
 
-        Camp UpdateCamp(Camp camp);
+        void UpdateCamp(Camp camp);
 
         Camp GetCamp(int id);
 
         void DeleteCamp(Camp camp);
 
-        PagingModel<Camp> FetchCamps(int pageNumber, int pageSize);
+        PagingModel<Camp> FetchCamps(int pageNumber, int pageSize, DateTime? eventDate);
 
         Country AddCountry(Country country);
+
+        void UpdateCountry(Country country);
 
         Country GetCountry(int id);
 
@@ -31,7 +33,11 @@ namespace WebApi.Interfaces
 
         void AddTalk(Talk talk);
 
+        void UpdateTalk(Talk talk);
+
         void AddSpeaker(Speaker speaker);
+
+        void UpdateSpeaker(Speaker speaker);
 
         void DeleteTalk(Talk talk);
 
@@ -39,15 +45,17 @@ namespace WebApi.Interfaces
 
         List<Camp> GetAllCampsAsync(bool includeTalks = false);
 
-        Camp GetCampAsync(string moniker, bool includeTalks = false);
+        Camp GetCampAsync(int campId, bool includeTalks = false);
 
-        List<Talk> GetTalksByMonikerAsync(string moniker, bool includeSpeakers = false);
+        PagingModel<Talk> GetTalksByCampAsync(int pageNumber, int pageSize, int? campId, bool includeSpeakers = false);
 
-        Talk GetTalkByMonikerAsync(string moniker, int talkId, bool includeSpeakers = false);
+        Talk GetTalkByIdAsync(int talkId, bool includeSpeakers = false);
 
         List<Speaker> GetSpeakersByMonikerAsync(string moniker);
 
         List<Speaker> GetAllSpeakersAsync();
+
+        PagingModel<Speaker> FetchSpeakers(int pageSize, int pageNumber, string firstName);
 
         Speaker GetSpeaker(int speakerId);
     }

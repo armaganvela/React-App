@@ -212,21 +212,9 @@
     <Compile Include="Infrastucture\BusinessRuleException.cs" />
     <Compile Include="Infrastucture\Extensions.cs" />
     <Compile Include="Interfaces\ICampRepository.cs" />
-    <Compile Include="Migrations\202004021145417_x1.cs" />
-    <Compile Include="Migrations\202004021145417_x1.Designer.cs">
-      <DependentUpon>202004021145417_x1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004081339491_x2.cs" />
-    <Compile Include="Migrations\202004081339491_x2.Designer.cs">
-      <DependentUpon>202004081339491_x2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004081550328_x3.cs" />
-    <Compile Include="Migrations\202004081550328_x3.Designer.cs">
-      <DependentUpon>202004081550328_x3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004101339451_x4.cs" />
-    <Compile Include="Migrations\202004101339451_x4.Designer.cs">
-      <DependentUpon>202004101339451_x4.cs</DependentUpon>
+    <Compile Include="Migrations\202004171053213_x1.cs" />
+    <Compile Include="Migrations\202004171053213_x1.Designer.cs">
+      <DependentUpon>202004171053213_x1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Camp.cs" />
@@ -264,17 +252,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004021145417_x1.resx">
-      <DependentUpon>202004021145417_x1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004081339491_x2.resx">
-      <DependentUpon>202004081339491_x2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004081550328_x3.resx">
-      <DependentUpon>202004081550328_x3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004101339451_x4.resx">
-      <DependentUpon>202004101339451_x4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004171053213_x1.resx">
+      <DependentUpon>202004171053213_x1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

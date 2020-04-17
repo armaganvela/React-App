@@ -1,5 +1,5 @@
 import { AppAction } from '../../../config/store/types';
-import { ActionTypes, AlertType, NavigateAction, ReplaceAction, ShowAlertAction, ShowProgressAction } from './types';
+import { ActionTypes, AlertType, NavigateAction, ReplaceAction, ShowAlertAction, ShowProgressAction, OpenDeleteModalAction } from './types';
 import { history, RouteName } from '../../../config/router';
 
 export const navigate = (routeName: RouteName): NavigateAction => {
@@ -42,3 +42,8 @@ export const showHttpErrorAlert = (error: { response: any }) => {
 
 	return showAlert('error', Message, Message);
 };
+
+export const openDeleteModal = (openModal: boolean): OpenDeleteModalAction => ({
+	type: ActionTypes.open_delete_modal,
+	openModal
+});

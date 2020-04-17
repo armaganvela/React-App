@@ -1,8 +1,10 @@
 import { Reducer } from 'redux';
 import { Action, ActionTypes, State } from './types';
-import { stat } from 'fs';
 
 const initialState: State = {
+	searchCriteria: {
+		eventDate: undefined,
+	},
 	draftCamp: {
 		id: '',
 		name: '',
@@ -10,14 +12,12 @@ const initialState: State = {
 		eventDate: undefined,
 		country: undefined,
 	},
-
 	camps: [],
 	countries: [],
+
 	totalCount: 0,
 	pageNumber: 1,
 	pageSize: 5,
-
-	openModal: false,
 };
 
 const camp: Reducer<State, Action> = (state = initialState, action) => {
@@ -86,6 +86,15 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 				}
 			};
 
+		case ActionTypes.change_search_event_date:
+			return {
+				...state,
+				searchCriteria: {
+					...state.searchCriteria,
+					eventDate: action.eventDate
+				}
+			};
+
 		case ActionTypes.set_draft_camp:
 			return {
 				...state,
@@ -104,12 +113,6 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 				}
 			};
 
-		case ActionTypes.open_delete_modal:
-			return {
-				...state,
-				openModal: action.openModal,
-			};
-
 		case ActionTypes.delete_camp_result:
 			if (action.hasError) return state;
 			return {
@@ -117,6 +120,25 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 				camps: state.camps.filter(x => x.id !== action.campId),
 				totalCount: state.totalCount - 1,
 			};
+
+		case ActionTypes.clear_draft_camp:
+			return {
+				...state,
+				searchCriteria: {
+					...state.searchCriteria,
+					...initialState.searchCriteria
+				}
+			};
+
+		case ActionTypes.clear_search_criteria:
+			return {
+				...state,
+				searchCriteria: {
+					...state.searchCriteria,
+					...initialState.searchCriteria
+				}
+			};
+
 
 		default:
 			return state;

@@ -5,10 +5,11 @@ interface Props {
   onChange: (event: any) => void,
   value: string,
   placeholder: string,
+  error?: string,
 }
 
 const TextInput = (props: Props) => {
-  const { label, onChange, value, placeholder } = props;
+  const { label, onChange, value, placeholder, error } = props;
 
   return (
     <div className="form-group">
@@ -21,6 +22,7 @@ const TextInput = (props: Props) => {
           value={value}
           onChange={onChange}
         />
+        {error && <div className="alert alert-danger">{error}</div>}
       </div>
     </div>
   );

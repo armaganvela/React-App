@@ -27,15 +27,20 @@ namespace WebApi.Repositories
             return query.ToList();
         }
 
-        public PagingModel<Camp> FetchCamps(int pageNumber, int pageSize)
+        public PagingModel<Camp> FetchCamps(int pageNumber, int pageSize, DateTime? eventDate)
         {
             int totalCount = _context.Camps.Count();
-            List<Camp> camps = _context.Camps.Include(camp => camp.Country).ToList().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            IQueryable<Camp> camps = _context.Camps.Include(camp => camp.Country);
+
+            if (eventDate.HasValue)
+                camps = camps.Where(x => x.EventDate.Value.Year == eventDate.Value.Year &&
+                             x.EventDate.Value.Month == eventDate.Value.Month &&
+                             x.EventDate.Value.Day == eventDate.Value.Day);
 
             return new PagingModel<Camp>
             {
-                Items = camps,
-                TotalCount = totalCount
+                Items = camps.ToList().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList(),
+                TotalCount = camps.Count()
             };
         }
 
@@ -47,17 +52,12 @@ namespace WebApi.Repositories
             return camp;
         }
 
-        public Camp UpdateCamp(Camp camp)
+        public void UpdateCamp(Camp camp)
         {
-            Camp campToUpdated = _context.Camps.FirstOrDefault(x => x.CampId == camp.CampId);
-
-            campToUpdated.EventDate = camp.EventDate;
-            campToUpdated.Name = camp.Name;
-            campToUpdated.Moniker = camp.Moniker;
+            _context.Camps.Add(camp);
+            _context.Entry(camp).State = System.Data.Entity.EntityState.Modified;
 
             _context.SaveChanges();
-
-            return campToUpdated;
         }
 
         public Camp GetCamp(int id)
@@ -80,6 +80,14 @@ namespace WebApi.Repositories
             return newCountry;
         }
 
+        public void UpdateCountry(Country country)
+        {
+            _context.Countries.Add(country);
+            _context.Entry(country).State = System.Data.Entity.EntityState.Modified;
+
+            _context.SaveChanges();
+        }
+
         public List<Country> GetAllCountries()
         {
             IQueryable<Country> query = _context.Countries;
@@ -97,21 +105,44 @@ namespace WebApi.Repositories
         public void AddTalk(Talk talk)
         {
             _context.Talks.Add(talk);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTalk(Talk talk)
+        {
+            _context.Talks.Add(talk);
+            _context.Entry(talk).State = System.Data.Entity.EntityState.Modified;
+
+            _context.SaveChanges();
+        }
+        
+        public void DeleteTalk(Talk talk)
+        {
+            _context.Talks.Remove(talk);
+
+            _context.SaveChanges();
         }
 
         public void AddSpeaker(Speaker speaker)
         {
             _context.Speakers.Add(speaker);
+
+            _context.SaveChanges();
         }
 
-        public void DeleteTalk(Talk talk)
+        public void UpdateSpeaker(Speaker speaker)
         {
-            _context.Talks.Remove(talk);
+            _context.Speakers.Add(speaker);
+            _context.Entry(speaker).State = System.Data.Entity.EntityState.Modified;
+
+            _context.SaveChanges();
         }
 
         public void DeleteSpeaker(Speaker speaker)
         {
             _context.Speakers.Remove(speaker);
+
+            _context.SaveChanges();
         }
 
         public List<Camp> GetAllCampsByEventDate(DateTime eventTime, bool includeTalks = false)
@@ -148,7 +179,7 @@ namespace WebApi.Repositories
             return query.ToList();
         }
 
-        public Camp GetCampAsync(string moniker, bool includeTalks = false)
+        public Camp GetCampAsync(int campId, bool includeTalks = false)
         {
             IQueryable<Camp> query = _context.Camps
                 .Include(c => c.Country);
@@ -159,14 +190,14 @@ namespace WebApi.Repositories
             }
 
             // Query It
-            query = query.Where(c => c.Moniker == moniker);
+            query = query.Where(c => c.CampId == campId);
 
             return query.FirstOrDefault();
         }
 
-        public List<Talk> GetTalksByMonikerAsync(string moniker, bool includeSpeakers = false)
+        public PagingModel<Talk> GetTalksByCampAsync(int pageNumber, int pageSize, int? campId, bool includeSpeakers = false)
         {
-            IQueryable<Talk> query = _context.Talks;
+            IQueryable<Talk> query = _context.Talks.Include(x => x.Camp);
 
             if (includeSpeakers)
             {
@@ -174,17 +205,20 @@ namespace WebApi.Repositories
                   .Include(t => t.Speaker);
             }
 
-            // Add Query
-            query = query
-              .Where(t => t.Camp.Moniker == moniker)
-              .OrderByDescending(t => t.Title);
+            if (campId.HasValue)
+                query = query
+                  .Where(x => x.CampId == campId);
 
-            return query.ToList();
+            return new PagingModel<Talk>
+            {
+                Items = query.ToList().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList(),
+                TotalCount = query.ToList().Count()
+            };
         }
 
-        public Talk GetTalkByMonikerAsync(string moniker, int talkId, bool includeSpeakers = false)
+        public Talk GetTalkByIdAsync(int talkId, bool includeSpeakers = false)
         {
-            IQueryable<Talk> query = _context.Talks;
+            IQueryable<Talk> query = _context.Talks.Include(x => x.Camp);
 
             if (includeSpeakers)
             {
@@ -194,7 +228,7 @@ namespace WebApi.Repositories
 
             // Add Query
             query = query
-              .Where(t => t.TalkId == talkId && t.Camp.Moniker == moniker);
+              .Where(t => t.TalkId == talkId);
 
             return query.FirstOrDefault();
         }
@@ -209,6 +243,21 @@ namespace WebApi.Repositories
               .Distinct();
 
             return query.ToList();
+        }
+
+        public PagingModel<Speaker> FetchSpeakers(int pageSize, int pageNumber, string firstName)
+        {
+            IQueryable<Speaker> query = _context.Speakers;
+            
+            if (!string.IsNullOrEmpty(firstName))
+                query = query
+                  .Where(x => x.FirstName.Contains(firstName));
+
+            return new PagingModel<Speaker>
+            {
+                Items = query.ToList().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList(),
+                TotalCount = query.ToList().Count()
+            };
         }
 
         public List<Speaker> GetAllSpeakersAsync()

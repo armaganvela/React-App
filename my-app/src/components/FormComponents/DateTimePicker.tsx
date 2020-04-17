@@ -5,17 +5,20 @@ import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
     date?: Date,
-    onChangeDateTime: (date: Date) => void
+    onChangeDateTime: (date: Date) => void,
+    label: string,
+    placeHolder: string,
 }
 
 const DateTimePicker = (props: Props) => {
     return (
         <div className="form-group">
-            <label>Date</label>
+            <label>{props.label}</label>
             <div className="field">
                 <DatePicker
                     selected={props.date ? moment(props.date).toDate() : undefined}
                     onChange={props.onChangeDateTime}
+                    placeholderText={props.placeHolder}
                 />
             </div>
         </div>

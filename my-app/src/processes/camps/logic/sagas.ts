@@ -5,7 +5,6 @@ import {
 	fetchCampsResult,
 	setDraftCamp,
 	deleteCampResult,
-	openDeleteModal,
 	fetchCountriesResult,
 } from './actions';
 import { ActionTypes, GetCampAction, DeleteCampAction } from './types';
@@ -15,6 +14,7 @@ import {
 	showProgress,
 	showAlert,
 	showHttpErrorAlert,
+	openDeleteModal,
 } from '../../services/logic/actions';
 
 function* fetchCampsSaga() {
@@ -22,8 +22,9 @@ function* fetchCampsSaga() {
 		yield put(showProgress(""));
 
 		const { pageNumber } = yield select((state: AppState) => state.camp);
+		const { eventDate } = yield select((state: AppState) => state.camp.searchCriteria);
 
-		const response = yield call(getCampsApi, pageNumber);
+		const response = yield call(getCampsApi, pageNumber, eventDate);
 		yield put(fetchCampsResult(false, response.items, response.totalCount));
 	} catch (e) {
 		yield put(fetchCampsResult(true));
@@ -109,6 +110,6 @@ export default [
 	takeLatest(ActionTypes.get_camp, getCampSaga),
 	takeLatest(ActionTypes.add_camp, addCampSaga),
 	takeLatest(ActionTypes.update_camp, updateCampSaga),
-	takeLatest(ActionTypes.delete_camp, deleteCampSaga)
+	takeLatest(ActionTypes.delete_camp, deleteCampSaga),
 ];
 

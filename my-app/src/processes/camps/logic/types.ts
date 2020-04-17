@@ -1,30 +1,32 @@
 import { AppAction, AppResultAction } from '../../../config/store/types';
 
 export enum ActionTypes {
-	change_draft_name = 'CHANGE_DRAFT_NAME',
-	change_draft_moniker_name = 'CHANGE_DRAFT_MONIKER_NAME',
-	change_draft_event_date = 'CHANGE_DRAFT_EVENT_DATE',
-	change_draft_country = 'CHANGE_DRAFT_COUNTRY',
+	change_draft_name = 'CAMP_CHANGE_DRAFT_NAME',
+	change_draft_moniker_name = 'CAMP_CHANGE_DRAFT_MONIKER_NAME',
+	change_draft_event_date = 'CAMP_CHANGE_DRAFT_EVENT_DATE',
+	change_draft_country = 'CAMP_CHANGE_DRAFT_COUNTRY',
 
-	set_draft_camp = 'SET_DRAFT_CAMP',
-	clear_draft_camp = 'CLEAR_DRAFT_CAMP',
+	change_search_event_date = 'CAMP_CHANGE_SEARCH_EVENT_DATE',
 
-	get_camp = 'GET_CAMP',
-	get_camp_result = 'GET_CAMP_RESULT',
+	set_draft_camp = 'CAMP_SET_DRAFT_CAMP',
+	clear_draft_camp = 'CAMP_CLEAR_DRAFT_CAMP',
 
-	add_camp = 'ADD_CAMP',
-	update_camp = 'UPDATE_CAMP',
+	get_camp = 'CAMP_GET_CAMP',
+	get_camp_result = 'CAMP_GET_CAMP_RESULT',
 
-	fetch_camps = 'FETCH_CAMPS',
-	fetch_camps_result = 'FETCH_CAMPS_RESULT',
+	add_camp = 'CAMP_ADD_CAMP',
+	update_camp = 'CAMP_UPDATE_CAMP',
 
-	fetch_countries = 'FETCH_COUNTRIES',
-	fetch_countries_result = 'FETCH_COUNTRIES_RESULT',
+	fetch_camps = 'CAMP_FETCH_CAMPS',
+	fetch_camps_result = 'CAMP_FETCH_CAMPS_RESULT',
 
-	delete_camp = 'DELETE_CAMP',
-	delete_camp_result = 'DELETE_CAMP_RESULT',
+	fetch_countries = 'CAMP_FETCH_CAMP_COUNTRIES',
+	fetch_countries_result = 'CAMP_FETCH_CAMP_COUNTRIES_RESULT',
 
-	open_delete_modal = 'OPEN_DELETE_MODAL',
+	delete_camp = 'CAMP_DELETE_CAMP',
+	delete_camp_result = 'CAMP_DELETE_CAMP_RESULT',
+
+	clear_search_criteria = 'CAMP_SEARCH_CRITERIA',
 }
 
 export interface ChangeDraftNameAction extends AppAction {
@@ -47,6 +49,11 @@ export interface ChangeDraftEventCountryAction extends AppAction {
 	country?: Country;
 }
 
+export interface ChangeSearchEventDateAction extends AppAction {
+	type: ActionTypes.change_search_event_date,
+	eventDate?: Date;
+}
+
 export interface SetDraftCampAction extends AppAction {
 	type: ActionTypes.set_draft_camp;
 	camp: Camp;
@@ -65,6 +72,7 @@ export interface GetCampResultAction extends AppResultAction {
 export interface FetchCampsAction extends AppAction {
 	type: ActionTypes.fetch_camps;
 	pageNumber: number;
+	eventDate?: Date;
 }
 
 export interface FetchCampsResultAction extends AppResultAction {
@@ -78,11 +86,6 @@ export interface FetchCountriesResultAction extends AppResultAction {
 	countries?: Country[];
 }
 
-export interface OpenDeleteModal extends AppAction {
-	type: ActionTypes.open_delete_modal;
-	openModal: boolean;
-}
-
 export interface DeleteCampAction extends AppAction {
 	type: ActionTypes.delete_camp;
 	campId: string;
@@ -93,6 +96,22 @@ export interface DeleteCampResultAction extends AppResultAction {
 	campId?: string;
 }
 
+export type Action =
+	AppAction
+	& ChangeDraftNameAction
+	& ChangeDraftMonikerNameAction
+	& ChangeDraftEventDateAction
+	& ChangeDraftEventCountryAction
+	& ChangeSearchEventDateAction
+	& SetDraftCampAction
+	& GetCampAction
+	& GetCampResultAction
+	& FetchCampsAction
+	& FetchCampsResultAction
+	& FetchCountriesResultAction
+	& DeleteCampAction
+	& DeleteCampResultAction;
+	
 export interface Camp {
 	id: string;
 	name: string;
@@ -106,29 +125,17 @@ export interface Country {
 	name: string;
 }
 
-export type Action =
-	AppAction
-	& ChangeDraftNameAction
-	& ChangeDraftMonikerNameAction
-	& ChangeDraftEventDateAction
-	& ChangeDraftEventCountryAction
-	& SetDraftCampAction
-	& GetCampAction
-	& GetCampResultAction
-	& FetchCampsAction
-	& FetchCampsResultAction
-	& FetchCountriesResultAction
-	& DeleteCampAction
-	& DeleteCampResultAction
-	& OpenDeleteModal;
+export interface SearchCriteria {
+	eventDate?: Date;
+}
 
 export interface State {
-    draftCamp: Camp;
-
+	searchCriteria: SearchCriteria;
+	draftCamp: Camp;
 	camps: Camp[];
 	countries: Country[];
+	
 	totalCount: number;
 	pageNumber: number;
 	pageSize: number;
-	openModal: boolean;
 }

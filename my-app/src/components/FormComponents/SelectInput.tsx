@@ -6,10 +6,11 @@ interface Props {
     onChange: (event: any) => void,
     defaultOption: string,
     value: string,
+    error?: string,
 }
 
 const SelectInput = (props: Props) => {
-    const { label, onChange, defaultOption, value, options } = props;
+    const { label, onChange, defaultOption, value, options, error } = props;
 
     return (
         <div className="form-group">
@@ -29,6 +30,7 @@ const SelectInput = (props: Props) => {
               );
             })}
           </select>
+          {error && <div className="alert alert-danger">{error}</div>}
         </div>
       </div>
     );

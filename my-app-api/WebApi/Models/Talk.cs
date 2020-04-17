@@ -18,5 +18,31 @@ namespace WebApi.Models
         public string Title { get; set; }
         public string Abstract { get; set; }
         public int Level { get; set; }
+
+        public static Talk Create(string title, string _abstract, Camp camp, Speaker speaker)
+        {
+            return new Talk()
+            {
+                Title = title,
+                Abstract = _abstract,
+                Camp = camp,
+                Speaker = speaker,
+                CampId = camp.CampId,
+                SpeakerId = speaker.SpeakerId
+            };
+        }
+
+        public Talk Update(int id, string title, string _abstract, Camp camp, Speaker speaker)
+        {
+            TalkId = id;
+            Title = title;
+            Abstract = _abstract;
+            Camp = camp;
+            Speaker = speaker;
+            CampId = camp.CampId;
+            SpeakerId = speaker.SpeakerId;
+
+            return this;
+        }
     }
 }

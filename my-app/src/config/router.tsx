@@ -5,7 +5,13 @@ import { Route, RouteProps, Router, Switch } from 'react-router-dom';
 import { Layout, NotFound } from '../layout';
 import Camps from '../processes/camps/views/Camps';
 import AddEditCamp from '../processes/camps/views/AddEditCamp';
+import Talks from '../processes/talks/views/Talks';
 import Login from '../processes/auth/views/login';
+import AddEditTalk from '../processes/talks/views/AddEditTalk';
+import Speakers from '../processes/speakers/views/Speakers';
+import AddEditSpeaker from '../processes/speakers/views/AddEditSpeaker';
+import Countries from '../processes/country/views/Countries';
+import AddEditCountry from '../processes/country/views/AddEditCountry';
 
 export type RouteName = string;
 
@@ -16,6 +22,15 @@ export const routes: { [name in RouteName]: RouteConfig } = {
 	Camps: { path: '/', component: Camps, exact: true },
 	AddCamp: { path: '/camps/add', component: AddEditCamp },
 	UpdateCamp: { path: '/camps/edit/:campId', component: AddEditCamp },
+	Talks: { path: '/talks', component: Talks, exact: true },
+	AddTalk: { path: '/talks/add', component: AddEditTalk },
+	UpdateTalk: { path: '/talks/edit/:talkId', component: AddEditTalk },
+	Speakers: { path: '/speakers', component: Speakers, exact: true },
+	AddSpeaker: { path: '/speakers/add', component: AddEditSpeaker },
+	UpdateSpeaker: { path: '/speakers/edit/:speakerId', component: AddEditSpeaker },
+	Countries: { path: '/countries', component: Countries, exact: true },
+	AddCountry: { path: '/countries/add', component: AddEditCountry },
+	UpdateCountry: { path: '/countries/edit/:countryId', component: AddEditCountry },
 	Login: { path: '/login', component: Login },
 };
 

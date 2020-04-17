@@ -21,8 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface Props{
-    onClickLogout: () => void
+interface Props {
+  onClickLogout: () => void,
+  onOpenDrawer: () => void,
 }
 
 export default function NavBar(props: Props) {
@@ -32,11 +33,11 @@ export default function NavBar(props: Props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={props.onOpenDrawer}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Example
+            CAMP SYSTEM
           </Typography>
           <Button color="inherit" onClick={props.onClickLogout}>Logout</Button>
         </Toolbar>

@@ -6,10 +6,11 @@ interface Props {
     camps: Camp[],
     onEditClick: (campId: string) => void;
     onOpenDeleteModalClick: (campId: string) => void;
+    onRedirectToTalks: (campId: string) => void;
 }
 
 const CampList = (props: Props) => {
-    const { camps, onEditClick, onOpenDeleteModalClick } = props;
+    const { camps, onEditClick, onOpenDeleteModalClick, onRedirectToTalks } = props;
 
     return (
         <table className="table">
@@ -21,14 +22,17 @@ const CampList = (props: Props) => {
                     <th>Event Date</th>
                     <th />
                     <th />
-                    <th />
                 </tr>
             </thead>
             <tbody>
                 {camps.map(camp => {
                     return (
                         <tr key={camp.id}>
-                            <td>{camp.name}</td>
+                            <td>
+                                <a href='#' onClick={(e: any) => { e.preventDefault(); onRedirectToTalks(camp.id)}}>
+                                    {camp.name}
+                                </a>
+                            </td>
                             <td>{camp.moniker}</td>
                             <td>{camp.country?.name}</td>
                             <td>{camp.eventDate ? moment(camp.eventDate).format('L') : ''}</td>

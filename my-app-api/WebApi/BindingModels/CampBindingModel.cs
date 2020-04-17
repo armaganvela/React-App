@@ -19,9 +19,48 @@ namespace WebApi.BindingModels
 
         public DateTime? EventDate { get; set; }
 
-        public Country Country { get; set; }
+        public CountryBindingModel Country { get; set; }
 
         public int? CountryId { get; set; }
+    }
+
+    public class TalkBindingModel
+    {
+        public int TalkId { get; set; }
+        
+        public int SpeakerId { get; set; }
+        public int CampId { get; set; }
+        public SpeakerBindingModel Speaker { get; set; }
+        public CampBindingModel Camp { get; set; }
+
+        public string Title { get; set; }
+        public string Abstract { get; set; }
+        public int Level { get; set; }
+    }
+
+    public class SpeakerBindingModel
+    {
+        public int SpeakerId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MiddleName { get; set; }
+        public string Company { get; set; }
+    }
+
+    public class FetchSpeakerBindingModel
+    {
+        public int PageNumber { get; set; }
+
+        public int PageSize { get; set; }
+
+        public string FirstName { get; set; }
+    }
+
+    public class CountryBindingModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
     }
 
     public class DeleteCampBindingModel
@@ -29,10 +68,10 @@ namespace WebApi.BindingModels
         public int CampId { get; set; }
     }
 
-    public class CampPagingModel
+    public class PagingBindingModel<T> where T :class
     {
         public int TotalCount { get; set; }
 
-        public List<CampBindingModel> Items { get; set; }
+        public List<T> Items { get; set; }
     }
 }

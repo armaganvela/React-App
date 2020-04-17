@@ -10,6 +10,8 @@ export enum ActionTypes {
 
 	show_alert = 'SERVICES__SHOW_ALERT',
 	clear_alert = 'SERVICES__CLEAR_ALERT',
+
+	open_delete_modal = 'SERVICES__OPEN_DELETE_MODAL',
 }
 
 export interface NavigateAction extends AppAction {
@@ -34,12 +36,18 @@ export interface ShowAlertAction extends AppAction {
 	message: string;
 }
 
+export interface OpenDeleteModalAction extends AppAction {
+	type: ActionTypes.open_delete_modal;
+	openModal: boolean;
+}
+
 export type Action =
 	AppAction &
 	AppResultAction &
 	NavigateAction &
 	ReplaceAction &
 	ShowProgressAction &
+	OpenDeleteModalAction &
 	ShowAlertAction;
 
 export type AlertType = 'error' | 'success' | 'warning' | 'info';
@@ -59,4 +67,5 @@ export interface Alert {
 export interface State {
 	progress: Progress;
 	alert: Alert;
+	openDeleteModal: boolean;
 }

@@ -12,11 +12,52 @@ namespace WebApi.Migrations
                 c => new
                     {
                         CampId = c.Int(nullable: false, identity: true),
+                        CountryId = c.Int(),
                         Name = c.String(),
                         Moniker = c.String(),
-                        EventDate = c.DateTime(nullable: false),
+                        EventDate = c.DateTime(storeType: "date"),
                     })
-                .PrimaryKey(t => t.CampId);
+                .PrimaryKey(t => t.CampId)
+                .ForeignKey("dbo.Countries", t => t.CountryId)
+                .Index(t => t.CountryId);
+            
+            CreateTable(
+                "dbo.Countries",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Talks",
+                c => new
+                    {
+                        TalkId = c.Int(nullable: false, identity: true),
+                        CampId = c.Int(nullable: false),
+                        SpeakerId = c.Int(nullable: false),
+                        Title = c.String(),
+                        Abstract = c.String(),
+                        Level = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.TalkId)
+                .ForeignKey("dbo.Camps", t => t.CampId, cascadeDelete: true)
+                .ForeignKey("dbo.Speakers", t => t.SpeakerId, cascadeDelete: true)
+                .Index(t => t.CampId)
+                .Index(t => t.SpeakerId);
+            
+            CreateTable(
+                "dbo.Speakers",
+                c => new
+                    {
+                        SpeakerId = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        MiddleName = c.String(),
+                        Company = c.String(),
+                    })
+                .PrimaryKey(t => t.SpeakerId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -99,17 +140,26 @@ namespace WebApi.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Talks", "SpeakerId", "dbo.Speakers");
+            DropForeignKey("dbo.Talks", "CampId", "dbo.Camps");
+            DropForeignKey("dbo.Camps", "CountryId", "dbo.Countries");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Talks", new[] { "SpeakerId" });
+            DropIndex("dbo.Talks", new[] { "CampId" });
+            DropIndex("dbo.Camps", new[] { "CountryId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Speakers");
+            DropTable("dbo.Talks");
+            DropTable("dbo.Countries");
             DropTable("dbo.Camps");
         }
     }

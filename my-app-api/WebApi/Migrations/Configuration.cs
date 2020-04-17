@@ -46,24 +46,7 @@ namespace WebApi.Migrations
             var adminUser = manager.FindByName("furkanvela");
 
             manager.AddToRoles(adminUser.Id, new string[] { "SuperAdmin", "Admin" });
-
-            context.Camps.AddOrUpdate(r => r.Moniker, new List<Camp>
-            {
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2020", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2019", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2018", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2017", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2016", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2015", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2014", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2013", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2012", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2011", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2010", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2009", Name = "ATLANTA CAMPING" },
-                new Camp() { EventDate = DateTime.Now, Moniker = "ATL2008", Name = "ATLANTA CAMPING" },
-        }.ToArray());
-
+            
             context.Countries.AddOrUpdate(r => r.Name, new List<Country>
             {
                 new Country() { Name = "Turkey" },

@@ -4,14 +4,20 @@ import { ActionTypes as ServicesActionTypes, State as ServicesState } from '../.
 import { ActionTypes as CampActionTypes, State as CampState } from '../../processes/camps/logic/types';
 import { ActionTypes as AuthActionTypes, State as AuthState } from '../../processes/auth/logic/types';
 import { ActionTypes as StorageActionTypes, State as StorageState } from '../../processes/storage/types';
+import { ActionTypes as TalkActionTypes, State as TalkState } from '../../processes/talks/logic/types';
+import { ActionTypes as SpeakerActionTypes, State as SpeakerState } from '../../processes/speakers/logic/types';
+import { ActionTypes as CountryActionTypes, State as CountryState } from '../../processes/country/logic/types';
 
-export type AppActionTypes = ServicesActionTypes | CampActionTypes | AuthActionTypes | StorageActionTypes;
+export type AppActionTypes = ServicesActionTypes | CampActionTypes | AuthActionTypes | StorageActionTypes | TalkActionTypes | SpeakerActionTypes | CountryActionTypes;
 
 export interface AppState {
 	services: ServicesState;
 	camp: CampState;
 	auth: AuthState;
 	storage: StorageState;
+	talk: TalkState;
+	speaker: SpeakerState;
+	country: CountryState;
 }
 
 export interface AppAction extends ReduxAction<AppActionTypes> {

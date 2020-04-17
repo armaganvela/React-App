@@ -10,5 +10,20 @@ namespace WebApi.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public static Country Create(string name)
+        {
+            return new Country
+            {
+                Name = name
+            };
+        }
+
+        public Country Update(string name)
+        {
+            this.Name = name;
+
+            return this;
+        }
     }
 }

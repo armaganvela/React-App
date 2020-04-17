@@ -1,16 +1,16 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { morphism } from 'morphism';
 import {
-	get_camps_url, get_camp_url, add_camp_url, update_camp_url, delete_camp_url, get_countries_url
+	get_camps_url, get_camp_url, add_camp_url, update_camp_url, delete_camp_url, get_countries_url, get_talks_by_camp_url, get_all_speakers
 } from '../../../config/urls';
 import { campMap, countryMap } from './mapper';
 import { Country } from './types';
 
-export const getCampsApi = async (pageNumber: number) => {
+export const getCampsApi = async (pageNumber: number, eventDate?: Date) => {
 	const options: AxiosRequestConfig = {
 		url: get_camps_url,
 		method: 'GET',
-		params: { pageSize: 5, pageNumber: pageNumber },
+		params: { pageSize: 5, pageNumber, eventDate},
 	};
 
 	const response = await axios(options);

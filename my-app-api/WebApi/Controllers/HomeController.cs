@@ -27,17 +27,27 @@ namespace WebApi.Controllers
 
         [Route("getCamps")]
         [HttpGet]
-        public IHttpActionResult FetchCamps(int pageSize, int pageNumber)
+        public IHttpActionResult FetchCamps(int pageSize, int pageNumber, DateTime? eventDate = null)
         {
-            PagingModel<Camp> camps = _repository.FetchCamps(pageNumber, pageSize);
+            PagingModel<Camp> camps = _repository.FetchCamps(pageNumber, pageSize, eventDate);
 
-            CampPagingModel campPagingModel = new CampPagingModel
+            PagingBindingModel<CampBindingModel> campPagingModel = new PagingBindingModel<CampBindingModel>
             {
                 Items = camps.Items.Select(x => x.ToCampBindingModel()).ToList(),
                 TotalCount = camps.TotalCount,
             };
 
             return Ok(camps);
+        }
+
+        [Route("getAllCamps")]
+        [HttpGet]
+        public IHttpActionResult GetAllCamps()
+        {
+            List<Camp> camps = _repository.GetAllCamps();
+            var campsBindingModels = camps.Select(x => x.ToCampBindingModel()).ToList();
+
+            return Ok(campsBindingModels);
         }
 
         [Route("addCamp")]
@@ -111,13 +121,179 @@ namespace WebApi.Controllers
             return Ok(countries);
         }
 
-        [Route("getByMonikerName")]
+        [Route("getTalksByCamp")]
         [HttpGet]
-        public IHttpActionResult GetByMonikerName()
+        public IHttpActionResult GetTalksByCamp(int pageNumber, int pageSize, int? campId = null)
         {
-            List<Camp> countries = _repository.GetAllCampsAsync(true);
+            PagingModel<Talk> talks = _repository.GetTalksByCampAsync(pageNumber, pageSize, campId, true);
 
-            return Ok(countries);
+            PagingBindingModel<TalkBindingModel> talkPagingModel = new PagingBindingModel<TalkBindingModel>
+            {
+                Items = talks.Items.Select(x => x.ToTalkBindingModel()).ToList(),
+                TotalCount = talks.TotalCount,
+            };
+
+            return Ok(talkPagingModel);
+        }
+
+        [Route("getTalk")]
+        [HttpGet]
+        public IHttpActionResult GetTalk(int talkId)
+        {
+            Talk talk = _repository.GetTalkByIdAsync(talkId, true);
+
+            if (talk == null)
+                new BusinessRuleException("Talk is not found");
+
+            TalkBindingModel talkBindingModel = talk.ToTalkBindingModel();
+
+            return Ok(talkBindingModel);
+        }
+
+        [Route("updateTalk")]
+        [HttpPost]
+        public IHttpActionResult UpdateTalk(TalkBindingModel bindingModel)
+        {
+            Camp camp = _repository.GetCamp(bindingModel.CampId);
+            Speaker speaker = _repository.GetSpeaker(bindingModel.SpeakerId);
+            Talk talk = _repository.GetTalkByIdAsync(bindingModel.TalkId);
+
+            if (talk == null)
+                new BusinessRuleException("Talk is not found");
+
+            var talkToUpdated = talk.Update(bindingModel.TalkId, bindingModel.Title, bindingModel.Abstract, camp, speaker);
+            _repository.UpdateTalk(talkToUpdated);
+
+            return Ok();
+        }
+
+        [Route("addTalk")]
+        [HttpPost]
+        public IHttpActionResult AddTalk(TalkBindingModel bindingModel)
+        {
+            Camp camp = _repository.GetCamp(bindingModel.CampId);
+            Speaker speaker = _repository.GetSpeaker(bindingModel.SpeakerId);
+
+            Talk talk = Talk.Create(bindingModel.Title, bindingModel.Abstract, camp, speaker);
+
+            _repository.AddTalk(talk);
+
+            return Ok();
+        }
+
+        [Route("deleteTalk")]
+        [HttpPost]
+        public IHttpActionResult DeleteTalk(TalkBindingModel bindingModel)
+        {
+            Talk talk = _repository.GetTalkByIdAsync(bindingModel.TalkId);
+            
+            _repository.DeleteTalk(talk);
+
+            return Ok();
+        }
+
+
+        [Route("getAllSpeakers")]
+        [HttpGet]
+        public IHttpActionResult GetAllSpeakers()
+        {
+            List<Speaker> speakers = _repository.GetAllSpeakersAsync();
+
+            List<SpeakerBindingModel> speakersBindingModel = speakers.Select(x => x.ToSpeakerBindingModel()).ToList();
+
+            return Ok(speakersBindingModel);
+        }
+
+        [Route("fetchSpeakers")]
+        [HttpGet]
+        public IHttpActionResult FetchSpeakers([FromUri]FetchSpeakerBindingModel bindingModel)
+        {
+            PagingModel<Speaker> speakers = _repository.FetchSpeakers(bindingModel.PageSize, bindingModel.PageNumber, bindingModel.FirstName);
+
+            PagingBindingModel<SpeakerBindingModel> speakersBindingModel = new PagingBindingModel<SpeakerBindingModel>()
+            {
+                Items = speakers.Items.Select(x => x.ToSpeakerBindingModel()).ToList(),
+                TotalCount = speakers.TotalCount
+            };
+
+            return Ok(speakersBindingModel);
+        }
+
+        [Route("addSpeaker")]
+        [HttpPost]
+        public IHttpActionResult AddSpeaker(SpeakerBindingModel bindingModel)
+        {
+            Speaker speaker = Speaker.Create(bindingModel.FirstName, bindingModel.LastName, bindingModel.MiddleName, bindingModel.Company);
+
+            _repository.AddSpeaker(speaker);
+
+            return Ok();
+        }
+
+        [Route("updateSpeaker")]
+        [HttpPost]
+        public IHttpActionResult UpdateSpeaker(SpeakerBindingModel bindingModel)
+        {
+            Speaker speaker = _repository.GetSpeaker(bindingModel.SpeakerId);
+
+            speaker = speaker.Update(bindingModel.SpeakerId, bindingModel.FirstName, bindingModel.LastName, bindingModel.MiddleName, bindingModel.Company);
+
+            _repository.UpdateSpeaker(speaker);
+
+            return Ok();
+        }
+
+        [Route("getSpeaker")]
+        [HttpGet]
+        public IHttpActionResult GetSpeaker(int speakerId)
+        {
+            Speaker speaker = _repository.GetSpeaker(speakerId);
+
+            if (speaker == null)
+                new BusinessRuleException("Speaker is not found");
+
+            SpeakerBindingModel bindingModel = speaker.ToSpeakerBindingModel();
+
+            return Ok(bindingModel);
+        }
+
+        [Route("addCountry")]
+        [HttpPost]
+        public IHttpActionResult AddCountry(CountryBindingModel bindingModel)
+        {
+            Country country = Country.Create(bindingModel.Name);
+
+            _repository.AddCountry(country);
+
+            return Ok();
+        }
+
+        [Route("updateCountry")]
+        [HttpPost]
+        public IHttpActionResult UpdateCountry(CountryBindingModel bindingModel)
+        {
+            Country country = _repository.GetCountry(bindingModel.Id);
+
+            if (country == null)
+                new BusinessRuleException("Country is not found");
+
+            country = country.Update(bindingModel.Name);
+
+            _repository.UpdateCountry(country);
+
+            return Ok();
+        }
+
+        [Route("getCountry")]
+        [HttpGet]
+        public IHttpActionResult GetCountry(int countryId)
+        {
+            Country country = _repository.GetCountry(countryId);
+
+            if (country == null)
+                new BusinessRuleException("Country is not found");
+
+            return Ok(country);
         }
     }
 }

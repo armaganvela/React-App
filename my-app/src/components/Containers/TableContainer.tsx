@@ -8,19 +8,22 @@ interface Props {
     totalCount?: number,
     pageNumber?: number,
     onChangePageNumber?: (pageNumber: number) => void,
+    paging?: boolean
 }
 
 const TableContainer = (props: Props) => {
-    const { title, totalCount, pageNumber, children, actions, onChangePageNumber } = props;
+    const { title, totalCount, pageNumber, children, actions, onChangePageNumber, paging = true } = props;
 
     return (
         <>
             <h2>{title}</h2>
             {actions}
             {children}
-            <div className="float-right">
-                <PaginationComponent handlePagingChange={onChangePageNumber!} totalCount={totalCount!} pageNumber={pageNumber!} />
-            </div>
+            {paging &&
+                <div className="float-right">
+                    <PaginationComponent handlePagingChange={onChangePageNumber!} totalCount={totalCount!} pageNumber={pageNumber!} />
+                </div>
+            }
         </>
     );
 };

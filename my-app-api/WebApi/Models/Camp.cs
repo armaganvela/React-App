@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,6 +15,8 @@ namespace WebApi.Models
 
         public string Name { get; set; }
         public string Moniker { get; set; }
+
+        [Column(TypeName = "Date")]
         public DateTime? EventDate { get; set; }
 
         public List<Talk> Talks { get; set; }
