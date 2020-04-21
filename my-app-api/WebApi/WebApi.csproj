@@ -212,9 +212,9 @@
     <Compile Include="Infrastucture\BusinessRuleException.cs" />
     <Compile Include="Infrastucture\Extensions.cs" />
     <Compile Include="Interfaces\ICampRepository.cs" />
-    <Compile Include="Migrations\202004211344487_x1.cs" />
-    <Compile Include="Migrations\202004211344487_x1.Designer.cs">
-      <DependentUpon>202004211344487_x1.cs</DependentUpon>
+    <Compile Include="Migrations\202004211606383_x1.cs" />
+    <Compile Include="Migrations\202004211606383_x1.Designer.cs">
+      <DependentUpon>202004211606383_x1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Camp.cs" />
@@ -253,8 +253,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004211344487_x1.resx">
-      <DependentUpon>202004211344487_x1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004211606383_x1.resx">
+      <DependentUpon>202004211606383_x1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

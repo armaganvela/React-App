@@ -75,7 +75,6 @@ const AddEditSpeaker = () => {
         const errors = {} as any;
 
         if (!lastName) errors.lastName = "Last Name is required.";
-        if (!middleName) errors.middleName = "Middle Name is required";
         if (!firstName) errors.firstName = "First Name is required";
         if (!company) errors.middleName = "Company is required";
 
@@ -102,7 +101,6 @@ const AddEditSpeaker = () => {
                         value={middleName}
                         onChange={onChangeMiddleName}
                         placeholder="Middle Name"
-                        error={errors.middleName}
                     />
                     <TextInput
                         label="Last Name"

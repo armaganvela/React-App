@@ -55,7 +55,7 @@ const AddEditCity = () => {
             return;
 
         dispatch(addCity());
-    }, [name]);
+    }, [name, country]);
 
     const onUpdateCity = useCallback((event: any) => {
         event.preventDefault();
@@ -64,16 +64,17 @@ const AddEditCity = () => {
             return;
 
         dispatch(updateCity());
-    }, [name]);
+    }, [name, country]);
 
     const formIsValid = useCallback(() => {
         const errors = {} as any;
 
         if (!name) errors.name = "Name is required.";
+        if (!country) errors.country = "Country is required";
 
         setErrors(errors);
         return Object.keys(errors).length === 0;
-    }, [name])
+    }, [name, country])
 
     return (
         <>
@@ -98,6 +99,7 @@ const AddEditCity = () => {
                         value={country ? country.id : ''}
                         onChange={onCountryChange}
                         defaultOption="-Select Country--"
+                        error={errors.country}
                     />
                 </FormContainer>
             }
