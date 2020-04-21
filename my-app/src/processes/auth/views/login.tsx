@@ -26,7 +26,7 @@ const Login = () => {
         <form
             onSubmit={onLoginClick}
         >
-             <h2>Login</h2>
+            <h2>Login</h2>
             <TextInput
                 label="Name"
                 value={name}
@@ -38,6 +38,7 @@ const Login = () => {
                 value={password}
                 onChange={onPasswordChange}
                 placeholder="Password"
+                type="password"
             />
             <button type="submit" className="btn btn-primary">
                 Login

@@ -76,11 +76,11 @@ const AddEditSpeaker = () => {
 
         if (!lastName) errors.lastName = "Last Name is required.";
         if (!firstName) errors.firstName = "First Name is required";
-        if (!company) errors.middleName = "Company is required";
+        if (!company) errors.company = "Company is required";
 
         setErrors(errors);
         return Object.keys(errors).length === 0;
-    }, [lastName, middleName, firstName, company])
+    }, [lastName, firstName, company])
 
     return (
         <>
