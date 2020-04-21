@@ -55,13 +55,20 @@ namespace WebApi.Controllers
         public void AddCamp(CampBindingModel bindingModel)
         {
             Country country = null;
+            City city = null;
 
             if (bindingModel.CountryId.HasValue)
             {
                 country = _repository.GetCountry(bindingModel.CountryId.Value);
             }
 
-            Camp camp = Camp.NewInstance(bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country);
+
+            if (bindingModel.CityId.HasValue)
+            {
+                city = _repository.GetCity(bindingModel.CityId.Value);
+            }
+
+            Camp camp = Camp.NewInstance(bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city);
 
             _repository.AddCamp(camp);
         }
@@ -77,12 +84,19 @@ namespace WebApi.Controllers
                 country = _repository.GetCountry(bindingModel.CountryId.Value);
             }
 
+            City city = null;
+
+            if (bindingModel.CityId.HasValue)
+            {
+                city = _repository.GetCity(bindingModel.CityId.Value);
+            }
+
             Camp camp = _repository.GetCamp(bindingModel.CampId);
 
             if (camp == null)
                 new BusinessRuleException("Camp is not found");
 
-            Camp newCamp = camp.Update(bindingModel.CampId, bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country);
+            Camp newCamp = camp.Update(bindingModel.CampId, bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city);
 
             _repository.UpdateCamp(newCamp);
         }
@@ -186,7 +200,7 @@ namespace WebApi.Controllers
         public IHttpActionResult DeleteTalk(TalkBindingModel bindingModel)
         {
             Talk talk = _repository.GetTalkByIdAsync(bindingModel.TalkId);
-            
+
             _repository.DeleteTalk(talk);
 
             return Ok();
@@ -294,6 +308,78 @@ namespace WebApi.Controllers
                 new BusinessRuleException("Country is not found");
 
             return Ok(country);
+        }
+
+        [Route("getCitiesByCountry")]
+        [HttpGet]
+        public IHttpActionResult GetCitiesByCountry(int countryId)
+        {
+            List<CityBindingModel> cities = _repository.GetCitiesByCountries(countryId).Select(x => x.ToCityBindingModel()).ToList();
+
+            return Ok(cities);
+        }
+
+        [Route("fetchCities")]
+        [HttpGet]
+        public IHttpActionResult FetchCities([FromUri]FetchCityBindingModel bindingModel)
+        {
+            PagingModel<City> cities = _repository.FetchCities(bindingModel.PageSize, bindingModel.PageNumber, bindingModel.CountryId);
+
+            PagingBindingModel<CityBindingModel> citiesBindingModel = new PagingBindingModel<CityBindingModel>()
+            {
+                Items = cities.Items.Select(x => x.ToCityBindingModel()).ToList(),
+                TotalCount = cities.TotalCount
+            };
+
+            return Ok(citiesBindingModel);
+        }
+
+        [Route("getCity")]
+        [HttpGet]
+        public IHttpActionResult GetCity(int cityId)
+        {
+            CityBindingModel city = _repository.GetCity(cityId).ToCityBindingModel();
+
+            return Ok(city);
+        }
+
+        [Route("addCity")]
+        [HttpPost]
+        public IHttpActionResult AddCity(CityBindingModel bindingModel)
+        {
+            Country country = _repository.GetCountry(bindingModel.CountryId);
+
+            City city = City.Create(bindingModel.Name, country);
+
+            _repository.AddCity(city);
+
+            return Ok();
+        }
+
+        [Route("updateCity")]
+        [HttpPost]
+        public IHttpActionResult UpdateCity(CityBindingModel bindingModel)
+        {
+            Country country = _repository.GetCountry(bindingModel.CountryId);
+
+            City city = _repository.GetCity(bindingModel.Id);
+
+            city = city.Update(bindingModel.Name, country);
+
+            _repository.UpdateCity(city);
+
+            return Ok();
+        }
+
+        [Route("deleteCity")]
+        [HttpPost]
+        public IHttpActionResult DeleteCity(CityBindingModel bindingModel)
+        {
+            City city = _repository.GetCity(bindingModel.Id);
+
+            _repository.DeleteCity(city);
+
+            return Ok();
         }
     }
 }

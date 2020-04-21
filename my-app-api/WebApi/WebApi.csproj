@@ -212,12 +212,13 @@
     <Compile Include="Infrastucture\BusinessRuleException.cs" />
     <Compile Include="Infrastucture\Extensions.cs" />
     <Compile Include="Interfaces\ICampRepository.cs" />
-    <Compile Include="Migrations\202004171053213_x1.cs" />
-    <Compile Include="Migrations\202004171053213_x1.Designer.cs">
-      <DependentUpon>202004171053213_x1.cs</DependentUpon>
+    <Compile Include="Migrations\202004211344487_x1.cs" />
+    <Compile Include="Migrations\202004211344487_x1.Designer.cs">
+      <DependentUpon>202004211344487_x1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Camp.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PagingModel.cs" />
@@ -252,8 +253,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004171053213_x1.resx">
-      <DependentUpon>202004171053213_x1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202004211344487_x1.resx">
+      <DependentUpon>202004211344487_x1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,7 +16,6 @@ import { getCountriesApi } from '../../camps/logic/api';
 function* fetchCountriesSaga() {
 	try {
 		yield put(showProgress(""));
-		debugger;
 		const response = yield call(getCountriesApi);
 		yield put(fetchCountriesResult(false, response));
 	} catch (e) {

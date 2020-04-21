@@ -14,16 +14,22 @@ export const get_talk_url = rootURL.concat('api/camp/getTalk');
 export const add_talk_url = rootURL.concat('api/camp/addTalk');
 export const update_talk_url = rootURL.concat('api/camp/updateTalk');
 export const delete_talk_url = rootURL.concat('api/camp/deleteTalk');
+export const get_cities_by_country = rootURL.concat('api/camp/getCitiesByCountry');
 
 export const get_speaker_url = rootURL.concat('api/camp/getSpeaker');
 export const add_speaker_url = rootURL.concat('api/camp/addSpeaker');
 export const update_speaker_url = rootURL.concat('api/camp/updateSpeaker');
 export const fetch_speakers_url = rootURL.concat('api/camp/fetchSpeakers');
 
-
 export const add_country_url = rootURL.concat('api/camp/addCountry');
 export const update_country_url = rootURL.concat('api/camp/updateCountry');
 export const get_country_url = rootURL.concat('api/camp/getCountry');
+
+export const add_city_url = rootURL.concat('api/camp/addCity');
+export const update_city_url = rootURL.concat('api/camp/updateCity');
+export const get_city_url = rootURL.concat('api/camp/getCity');
+export const delete_city_url = rootURL.concat('api/camp/deleteCity');
+export const fetch_cities_url = rootURL.concat('api/camp/fetchCities');
 
 export const login_url = rootURL.concat('token');
 

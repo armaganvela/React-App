@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Speaker from '@material-ui/icons/Speaker';
+import LocationCity from '@material-ui/icons/LocationCity';
 import Chat from '@material-ui/icons/Chat';
 import Public from '@material-ui/icons/Public';
 import HomeWork from '@material-ui/icons/HomeWork';
@@ -78,6 +79,11 @@ export default function SwipeableTemporaryDrawer(props: Props) {
           selected={pathname === routes["Countries"].path!.toString()}>
           <ListItemIcon><Public /></ListItemIcon>
           <ListItemText primary='Countries' />
+        </ListItem>
+        <ListItem button onClick={() => history.push(routes["Cities"].path!.toString())}
+          selected={pathname === routes["Cities"].path!.toString()}>
+          <ListItemIcon><LocationCity /></ListItemIcon>
+          <ListItemText primary='Cities' />
         </ListItem>
       </List>
     </div>

@@ -30,7 +30,7 @@ namespace WebApi.Repositories
         public PagingModel<Camp> FetchCamps(int pageNumber, int pageSize, DateTime? eventDate)
         {
             int totalCount = _context.Camps.Count();
-            IQueryable<Camp> camps = _context.Camps.Include(camp => camp.Country);
+            IQueryable<Camp> camps = _context.Camps.Include(camp => camp.Country).Include(camp => camp.City);
 
             if (eventDate.HasValue)
                 camps = camps.Where(x => x.EventDate.Value.Year == eventDate.Value.Year &&
@@ -62,7 +62,7 @@ namespace WebApi.Repositories
 
         public Camp GetCamp(int id)
         {
-            return _context.Camps.Include(x => x.Country).FirstOrDefault(x => x.CampId == id);
+            return _context.Camps.Include(x => x.Country).Include(x => x.City).FirstOrDefault(x => x.CampId == id);
         }
 
         public void DeleteCamp(Camp camp)
@@ -86,6 +86,58 @@ namespace WebApi.Repositories
             _context.Entry(country).State = System.Data.Entity.EntityState.Modified;
 
             _context.SaveChanges();
+        }
+
+        public City AddCity(City city)
+        {
+            City newCity = _context.Cities.Add(city);
+            _context.SaveChanges();
+
+            return newCity;
+        }
+
+        public void UpdateCity(City city)
+        {
+            _context.Cities.Add(city);
+            _context.Entry(city).State = System.Data.Entity.EntityState.Modified;
+
+            _context.SaveChanges();
+        }
+
+        public City GetCity(int cityId)
+        {
+            var city = _context.Cities.Include(x => x.Country).Include(x => x.Camps).FirstOrDefault(x => x.CityId == cityId);
+
+            return city;
+        }
+
+        public void DeleteCity(City city)
+        {
+            _context.Cities.Remove(city);
+
+            _context.SaveChanges();
+        }
+
+        public List<City> GetCitiesByCountries(int countryId)
+        {
+            var cities = _context.Cities.Include(x => x.Country).Where(x => x.CountryId == countryId).ToList();
+
+            return cities;
+        }
+
+        public PagingModel<City> FetchCities(int pageSize, int pageNumber, int? countryId)
+        {
+            var query = _context.Cities.Include(x => x.Country);
+
+            if (countryId.HasValue)
+                query = query
+                  .Where(x => x.CountryId == countryId.Value);
+
+            return new PagingModel<City>
+            {
+                Items = query.ToList().Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList(),
+                TotalCount = query.ToList().Count()
+            };
         }
 
         public List<Country> GetAllCountries()
@@ -115,7 +167,7 @@ namespace WebApi.Repositories
 
             _context.SaveChanges();
         }
-        
+
         public void DeleteTalk(Talk talk)
         {
             _context.Talks.Remove(talk);
@@ -248,7 +300,7 @@ namespace WebApi.Repositories
         public PagingModel<Speaker> FetchSpeakers(int pageSize, int pageNumber, string firstName)
         {
             IQueryable<Speaker> query = _context.Speakers;
-            
+
             if (!string.IsNullOrEmpty(firstName))
                 query = query
                   .Where(x => x.FirstName.Contains(firstName));

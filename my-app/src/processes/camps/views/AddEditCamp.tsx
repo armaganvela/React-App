@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../../config/store';
-import { changeDraftName, changeDraftMonikerName, setDraftCamp, getCamp, addCamp, updateCamp, clearDraftCamp, fetchCountries, changeDraftCoutry, changeDraftEventDate } from '../logic/actions';
+import { changeDraftName, changeDraftMonikerName, setDraftCamp, getCamp, addCamp, updateCamp, clearDraftCamp, fetchCountries, changeDraftCoutry, changeDraftEventDate, changeDraftCity, fetchCities } from '../logic/actions';
 import TextInput from '../../../components/FormComponents/TextInput';
 import FormContainer from '../../../components/Containers/FormContainer';
 import SelectInput from '../../../components/FormComponents/SelectInput';
@@ -15,9 +15,11 @@ const AddEditCamp = () => {
     const name = useSelector(state => state.camp.draftCamp.name);
     const eventDate = useSelector(state => state.camp.draftCamp.eventDate);
 
-    const camps = useSelector(state => state.camp.camps);
     const countries = useSelector(state => state.camp.countries);
     const country = useSelector(state => state.camp.draftCamp.country);
+
+    const cities = useSelector(state => state.camp.cities);
+    const city = useSelector(state => state.camp.draftCamp.city);
     const visible = useSelector(state => state.services.progress.visible);
 
     const dispatch = useDispatch();
@@ -30,10 +32,6 @@ const AddEditCamp = () => {
         dispatch(fetchCountries());
 
         if (isEditing) {
-            const camp = camps.find(x => x.id.toString() === campId);
-            if (camp)
-                dispatch(setDraftCamp(camp));
-            else
                 dispatch(getCamp(campId!));
         }
 
@@ -55,9 +53,17 @@ const AddEditCamp = () => {
     }, []);
 
     const onCountryChange = useCallback((event: any) => {
+        debugger;
         const country = countries.find(x => x.id.toString() === event.currentTarget.value);
         dispatch(changeDraftCoutry(country));
+        dispatch(fetchCities(country?.id));
     }, [countries]);
+
+    const onCityChange = useCallback((event: any) => {
+        const city = cities.find(x => x.id.toString() === event.currentTarget.value);
+        dispatch(changeDraftCity(city));
+    }, [cities]);
+
 
     const onAddCamp = useCallback((event: any) => {
         event.preventDefault();
@@ -80,7 +86,7 @@ const AddEditCamp = () => {
 
         if (!name) errors.name = "Name is required.";
         if (!monikerName) errors.monikerName = "Moniker Name is required";
- 
+
         setErrors(errors);
         return Object.keys(errors).length === 0;
     }, [name, monikerName]);
@@ -115,6 +121,16 @@ const AddEditCamp = () => {
                         value={country ? country.id : ''}
                         onChange={onCountryChange}
                         defaultOption="-Select Country--"
+                    />
+                    <SelectInput
+                        options={cities.map(city => ({
+                            value: city.id,
+                            text: city.name
+                        }))}
+                        label="Cities"
+                        value={city ? city.id : ''}
+                        onChange={onCityChange}
+                        defaultOption="-Select City--"
                     />
                     <DateTimePicker date={eventDate} onChangeDateTime={onChangeEventDate} label="Event Date" placeHolder="Select Event Date" />
                 </FormContainer>

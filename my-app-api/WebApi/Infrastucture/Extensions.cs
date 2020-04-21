@@ -27,6 +27,8 @@ namespace WebApi.Infrastucture
                 EventDate = model.EventDate,
                 CountryId = model.Country?.Id,
                 Country = model.Country?.ToCountryBindingModel(),
+                CityId = model.CityId,
+                City = model.City?.ToCityBindingModel(),
             };
 
             return result;
@@ -67,6 +69,18 @@ namespace WebApi.Infrastucture
                FirstName = model.FirstName,
                LastName = model.LastName,
                MiddleName = model.MiddleName,
+            };
+
+            return result;
+        }
+
+        public static CityBindingModel ToCityBindingModel(this City model)
+        {
+            var result = new CityBindingModel
+            {
+                Id = model.CityId,
+                Name = model.Name,
+                Country = model.Country?.ToCountryBindingModel(),
             };
 
             return result;

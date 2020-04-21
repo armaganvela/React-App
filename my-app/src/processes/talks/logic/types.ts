@@ -75,7 +75,6 @@ export interface GetAllCampsResultAction extends AppResultAction {
 export interface GetTalksByCampAction extends AppAction {
 	type: ActionTypes.get_talks_by_camp;
 	pageNumber: number;
-	campId?: string;
 }
 
 export interface GetTalksByCampResultAction extends AppResultAction {

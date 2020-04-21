@@ -13,12 +13,27 @@ namespace WebApi.Migrations
                     {
                         CampId = c.Int(nullable: false, identity: true),
                         CountryId = c.Int(),
+                        CityId = c.Int(),
                         Name = c.String(),
                         Moniker = c.String(),
                         EventDate = c.DateTime(storeType: "date"),
                     })
                 .PrimaryKey(t => t.CampId)
+                .ForeignKey("dbo.Cities", t => t.CityId)
                 .ForeignKey("dbo.Countries", t => t.CountryId)
+                .Index(t => t.CountryId)
+                .Index(t => t.CityId);
+            
+            CreateTable(
+                "dbo.Cities",
+                c => new
+                    {
+                        CityId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        CountryId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.CityId)
+                .ForeignKey("dbo.Countries", t => t.CountryId, cascadeDelete: true)
                 .Index(t => t.CountryId);
             
             CreateTable(
@@ -143,6 +158,8 @@ namespace WebApi.Migrations
             DropForeignKey("dbo.Talks", "SpeakerId", "dbo.Speakers");
             DropForeignKey("dbo.Talks", "CampId", "dbo.Camps");
             DropForeignKey("dbo.Camps", "CountryId", "dbo.Countries");
+            DropForeignKey("dbo.Cities", "CountryId", "dbo.Countries");
+            DropForeignKey("dbo.Camps", "CityId", "dbo.Cities");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -151,6 +168,8 @@ namespace WebApi.Migrations
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Talks", new[] { "SpeakerId" });
             DropIndex("dbo.Talks", new[] { "CampId" });
+            DropIndex("dbo.Cities", new[] { "CountryId" });
+            DropIndex("dbo.Camps", new[] { "CityId" });
             DropIndex("dbo.Camps", new[] { "CountryId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
@@ -160,6 +179,7 @@ namespace WebApi.Migrations
             DropTable("dbo.Speakers");
             DropTable("dbo.Talks");
             DropTable("dbo.Countries");
+            DropTable("dbo.Cities");
             DropTable("dbo.Camps");
         }
     }

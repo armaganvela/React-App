@@ -22,6 +22,10 @@ namespace WebApi.BindingModels
         public CountryBindingModel Country { get; set; }
 
         public int? CountryId { get; set; }
+
+        public CityBindingModel City { get; set; }
+
+        public int? CityId { get; set; }
     }
 
     public class TalkBindingModel
@@ -56,6 +60,15 @@ namespace WebApi.BindingModels
         public string FirstName { get; set; }
     }
 
+    public class FetchCityBindingModel
+    {
+        public int PageNumber { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int? CountryId { get; set; }
+    }
+
     public class CountryBindingModel
     {
         public int Id { get; set; }
@@ -67,6 +80,18 @@ namespace WebApi.BindingModels
     {
         public int CampId { get; set; }
     }
+
+    public class CityBindingModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public int CountryId { get; set; }
+
+        public CountryBindingModel Country { get; set; }
+    }
+
 
     public class PagingBindingModel<T> where T :class
     {

@@ -19,6 +19,7 @@ const CampList = (props: Props) => {
                     <th>Name</th>
                     <th>Moniker Name</th>
                     <th>Country</th>
+                    <th>City</th>
                     <th>Event Date</th>
                     <th />
                     <th />
@@ -35,6 +36,7 @@ const CampList = (props: Props) => {
                             </td>
                             <td>{camp.moniker}</td>
                             <td>{camp.country?.name}</td>
+                            <td>{camp.city?.name}</td>
                             <td>{camp.eventDate ? moment(camp.eventDate).format('L') : ''}</td>
                             <td>
                                 <button

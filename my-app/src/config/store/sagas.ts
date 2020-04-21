@@ -4,7 +4,8 @@ import authSaga from '../../processes/auth/logic/sagas';
 import talkSaga from '../../processes/talks/logic/sagas';
 import speakerSaga from '../../processes/speakers/logic/sagas';
 import countrySaga from '../../processes/country/logic/sagas';
+import citieaSaga from '../../processes/cities/logic/sagas';
 
 export default function* sagas() {
-	yield all([...campsSaga, ...authSaga, ...talkSaga, ...speakerSaga, ...countrySaga]);
+	yield all([...campsSaga, ...authSaga, ...talkSaga, ...speakerSaga, ...countrySaga, ...citieaSaga]);
 }

@@ -7,6 +7,7 @@ import storage from '../../processes/storage/reducer';
 import talk from '../../processes/talks/logic/reducer';
 import speaker from '../../processes/speakers/logic/reducers';
 import country from '../../processes/country/logic/reducer';
+import city from '../../processes/cities/logic/reducers';
 
 export default combineReducers({
 	services,
@@ -15,5 +16,6 @@ export default combineReducers({
 	storage,
 	talk,
 	speaker,
-	country
+	country,
+	city
 });

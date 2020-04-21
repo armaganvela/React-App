@@ -17,7 +17,7 @@ const Speakers = () => {
 
     return () => {
       dispatch(clearSearchCriteriaSpeaker());
-  };
+    };
   }, []);
 
   const speakers = useSelector(state => state.speaker.speakers);
@@ -58,12 +58,12 @@ const Speakers = () => {
         <>
           <SearchCriteriaContainer title={'Search Speaker'} onSubmit={onSearchSpeaker}>
             <div className="col-md-4 col-xs-4">
-            <TextInput
-                        label=""
-                        value={firstName}
-                        onChange={onChangeSearchFirstName}
-                        placeholder="First Name"
-                    />
+              <TextInput
+                label=""
+                value={firstName}
+                onChange={onChangeSearchFirstName}
+                placeholder="First Name"
+              />
             </div>
           </SearchCriteriaContainer>
           <TableContainer title="Speakers" actions={renderActions} pageNumber={pageNumber} totalCount={totalCount} onChangePageNumber={onChangePageNumber}>

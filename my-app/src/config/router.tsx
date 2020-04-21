@@ -12,6 +12,9 @@ import Speakers from '../processes/speakers/views/Speakers';
 import AddEditSpeaker from '../processes/speakers/views/AddEditSpeaker';
 import Countries from '../processes/country/views/Countries';
 import AddEditCountry from '../processes/country/views/AddEditCountry';
+import Cities from '../processes/cities/views/Cities';
+import AddEditCity from '../processes/cities/views/AddEditCity';
+import UnderConstruction from '../layout/UnderConstruction';
 
 export type RouteName = string;
 
@@ -31,6 +34,9 @@ export const routes: { [name in RouteName]: RouteConfig } = {
 	Countries: { path: '/countries', component: Countries, exact: true },
 	AddCountry: { path: '/countries/add', component: AddEditCountry },
 	UpdateCountry: { path: '/countries/edit/:countryId', component: AddEditCountry },
+	Cities: { path: '/cities', component: Cities, exact: true },
+	AddCity: { path: '/city/add', component: AddEditCity },
+	UpdateCity: { path: '/city/edit/:cityId', component: AddEditCity },
 	Login: { path: '/login', component: Login },
 };
 

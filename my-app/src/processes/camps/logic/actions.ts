@@ -10,11 +10,15 @@ import {
     GetCampAction,
     FetchCampsAction,
     FetchCampsResultAction,
+    FetchCitiesAction,
+    FetchCitiesResultAction,
     FetchCountriesResultAction,
     DeleteCampResultAction,
     DeleteCampAction,
     Camp,
     Country,
+    ChangeDraftCityAction,
+    City,
 } from './types';
 
 export const changeDraftName = (name: string): ChangeDraftNameAction => ({
@@ -37,6 +41,12 @@ export const changeDraftCoutry = (country?: Country): ChangeDraftEventCountryAct
     type: ActionTypes.change_draft_country,
     country
 });
+
+export const changeDraftCity = (city?: City): ChangeDraftCityAction => ({
+    type: ActionTypes.change_draft_city,
+    city
+});
+
 
 export const changeSearchEventDate = (eventDate?: Date): ChangeSearchEventDateAction => ({
     type: ActionTypes.change_search_event_date,
@@ -68,6 +78,18 @@ export const fetchCampsResult = (hasError: boolean, camps?: [], totalCount?: num
     hasError,
     camps,
     totalCount,
+});
+
+export const fetchCities = (countryId?: string): FetchCitiesAction => ({
+    type: ActionTypes.fetch_cities,
+    countryId
+});
+
+
+export const fetchCitiesResult = (hasError: boolean, cities?: []): FetchCitiesResultAction => ({
+    type: ActionTypes.fetch_cities_result,
+    hasError,
+    cities,
 });
 
 export const fetchCountries = (): AppAction => ({

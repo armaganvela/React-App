@@ -6,9 +6,11 @@ import {
 	setDraftCamp,
 	deleteCampResult,
 	fetchCountriesResult,
+	fetchCitiesResult,
+	fetchCities,
 } from './actions';
-import { ActionTypes, GetCampAction, DeleteCampAction } from './types';
-import { getCampsApi, getCampApi, addCampApi, updateCampApi, deleteCampApi, getCountriesApi } from './api';
+import { ActionTypes, GetCampAction, DeleteCampAction, ChangeDraftEventCountryAction, FetchCitiesAction } from './types';
+import { getCampsApi, getCampApi, addCampApi, updateCampApi, deleteCampApi, getCountriesApi, getCitiesByCountryApi } from './api';
 import {
 	hideProgress,
 	showProgress,
@@ -35,9 +37,9 @@ function* fetchCampsSaga() {
 
 function* addCampSaga() {
 	try {
-		const { name, moniker, eventDate, country } = yield select((state: AppState) => state.camp.draftCamp);
+		const { name, moniker, eventDate, country, city } = yield select((state: AppState) => state.camp.draftCamp);
 
-		yield call(addCampApi, name, moniker, eventDate, country);
+		yield call(addCampApi, name, moniker, eventDate, country, city);
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		history.push('/');
 	} catch (e) {
@@ -48,9 +50,9 @@ function* addCampSaga() {
 
 function* updateCampSaga() {
 	try {
-		const { id, name, moniker, eventDate, country } = yield select((state: AppState) => state.camp.draftCamp);
+		const { id, name, moniker, eventDate, country, city } = yield select((state: AppState) => state.camp.draftCamp);
 
-		yield call(updateCampApi, id, name, moniker, eventDate, country);
+		yield call(updateCampApi, id, name, moniker, eventDate, country, city);
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		history.push('/');
 	} catch (e) {
@@ -66,6 +68,8 @@ function* getCampSaga(action: GetCampAction) {
 		const { campId } = action;
 
 		const response = yield call(getCampApi, campId);
+
+		yield put(fetchCities(response.country ? response.country.id : undefined));
 		yield put(setDraftCamp(response));
 	} catch (e) {
 		yield (put(showHttpErrorAlert(e)));
@@ -104,6 +108,23 @@ function* fetchCountriesSaga() {
 	}
 }
 
+function* fetchCitiesSaga(action: FetchCitiesAction) {
+	try { 
+		const { countryId } = action;
+		
+        if(!countryId){
+			yield put(fetchCitiesResult(false, []));
+			return;			
+		}
+
+		const response = yield call(getCitiesByCountryApi, countryId);
+		yield put(fetchCitiesResult(false, response));
+	} catch (e) {
+		yield put(fetchCitiesResult(true));
+	} finally {
+		}
+}
+
 export default [
 	takeLatest(ActionTypes.fetch_camps, fetchCampsSaga),
 	takeLatest(ActionTypes.fetch_countries, fetchCountriesSaga),
@@ -111,5 +132,6 @@ export default [
 	takeLatest(ActionTypes.add_camp, addCampSaga),
 	takeLatest(ActionTypes.update_camp, updateCampSaga),
 	takeLatest(ActionTypes.delete_camp, deleteCampSaga),
+	takeLatest(ActionTypes.fetch_cities, fetchCitiesSaga),
 ];
 

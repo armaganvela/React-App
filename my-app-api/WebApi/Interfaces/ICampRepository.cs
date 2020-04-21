@@ -58,5 +58,17 @@ namespace WebApi.Interfaces
         PagingModel<Speaker> FetchSpeakers(int pageSize, int pageNumber, string firstName);
 
         Speaker GetSpeaker(int speakerId);
+
+        City AddCity(City city);
+
+        void UpdateCity(City city);
+
+        List<City> GetCitiesByCountries(int countryId);
+
+        City GetCity(int cityId);
+
+        void DeleteCity(City city);
+
+        PagingModel<City> FetchCities(int pageSize, int pageNumber, int? countryId);
     }
 }

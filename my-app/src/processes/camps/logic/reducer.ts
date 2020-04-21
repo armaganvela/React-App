@@ -11,9 +11,12 @@ const initialState: State = {
 		moniker: '',
 		eventDate: undefined,
 		country: undefined,
+		city: undefined,
 	},
+
 	camps: [],
 	countries: [],
+	cities: [],
 
 	totalCount: 0,
 	pageNumber: 1,
@@ -41,6 +44,13 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 			return {
 				...state,
 				countries: action.countries!,
+			};
+
+		case ActionTypes.fetch_cities_result:
+			if (action.hasError) return state;
+			return {
+				...state,
+				cities: action.cities!,
 			};
 
 		case ActionTypes.get_camp_result:
@@ -76,6 +86,17 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 					country: action.country
 				}
 			};
+
+			
+		case ActionTypes.change_draft_city:
+			return {
+				...state,
+				draftCamp: {
+					...state.draftCamp,
+					city: action.city
+				}
+			};
+
 
 		case ActionTypes.change_draft_event_date:
 			return {
