@@ -48,7 +48,7 @@ namespace WebApi.Models
                 CountryId = country?.Id,
                 Country = country,
                 City = city,
-                CityId = city.CityId,
+                CityId = city?.CityId,
             };
         }
     }
