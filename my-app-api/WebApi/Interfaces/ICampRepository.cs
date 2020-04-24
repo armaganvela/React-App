@@ -17,6 +17,8 @@ namespace WebApi.Interfaces
 
         Camp GetCamp(int id);
 
+        bool IsDublicateMonikerName(string monikerName, int? campId = null, bool isUpdate = false);
+
         void DeleteCamp(Camp camp);
 
         PagingModel<Camp> FetchCamps(int pageNumber, int pageSize, DateTime? eventDate);

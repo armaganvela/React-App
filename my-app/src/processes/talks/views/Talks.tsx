@@ -99,7 +99,7 @@ const Talks = () => {
                             <SelectInput
                                 options={camps.map(camp => ({
                                     value: camp.id,
-                                    text: camp.name
+                                    text: camp.moniker
                                 }))}
                                 label=""
                                 value={camp ? camp.id : ''}

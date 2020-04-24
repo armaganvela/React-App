@@ -65,6 +65,14 @@ namespace WebApi.Repositories
             return _context.Camps.Include(x => x.Country).Include(x => x.City).FirstOrDefault(x => x.CampId == id);
         }
 
+        public bool IsDublicateMonikerName(string monikerName, int? campId = null , bool isUpdate = false)
+        {
+            if(isUpdate && campId.HasValue)
+                return _context.Camps.FirstOrDefault(x => x.Moniker == monikerName && x.CampId != campId ) != null;
+
+            return _context.Camps.FirstOrDefault(x => x.Moniker == monikerName) != null;
+        }
+
         public void DeleteCamp(Camp camp)
         {
             _context.Camps.Remove(camp);

@@ -57,6 +57,9 @@ namespace WebApi.Controllers
             Country country = null;
             City city = null;
 
+            if(_repository.IsDublicateMonikerName(bindingModel.Moniker))
+                throw new BusinessRuleException("Moniker Name can not be dublicated");
+
             if (bindingModel.CountryId.HasValue)
             {
                 country = _repository.GetCountry(bindingModel.CountryId.Value);
@@ -78,7 +81,7 @@ namespace WebApi.Controllers
         public void UpdateCamp(CampBindingModel bindingModel)
         {
             Country country = null;
-
+            
             if (bindingModel.CountryId.HasValue)
             {
                 country = _repository.GetCountry(bindingModel.CountryId.Value);
@@ -92,6 +95,9 @@ namespace WebApi.Controllers
             }
 
             Camp camp = _repository.GetCamp(bindingModel.CampId);
+
+            if (_repository.IsDublicateMonikerName(bindingModel.Moniker, camp.CampId, true))
+                throw new BusinessRuleException("Moniker Name can not be dublicated");
 
             if (camp == null)
                 new BusinessRuleException("Camp is not found");
