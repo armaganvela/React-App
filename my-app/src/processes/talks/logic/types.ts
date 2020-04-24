@@ -67,6 +67,11 @@ export interface GetTalkAction extends AppAction {
 	talkId: string;
 }
 
+export interface GetAllCampsAction extends AppAction {
+	type: ActionTypes.get_all_camps;
+	monikerName?: string;
+}
+
 export interface GetAllCampsResultAction extends AppResultAction {
 	type: ActionTypes.get_all_camps_result;
 	camps?: Camp[];
@@ -75,6 +80,7 @@ export interface GetAllCampsResultAction extends AppResultAction {
 export interface GetTalksByCampAction extends AppAction {
 	type: ActionTypes.get_talks_by_camp;
 	pageNumber: number;
+	monikerName?: string;
 }
 
 export interface GetTalksByCampResultAction extends AppResultAction {
@@ -111,6 +117,7 @@ export type Action =
     & GetTalkAction
 	& GetTalksByCampAction
 	& GetTalksByCampResultAction
+	& GetAllCampsAction
 	& GetAllCampsResultAction
 	& GetAllSpeakersResultAction;
 

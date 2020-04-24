@@ -60,6 +60,15 @@ namespace WebApi.BindingModels
         public string FirstName { get; set; }
     }
 
+    public class FetchCampsBindingModel
+    {
+        public int PageNumber { get; set; }
+
+        public int PageSize { get; set; }
+
+        public string MonikerName { get; set; }
+    }
+
     public class FetchCityBindingModel
     {
         public int PageNumber { get; set; }

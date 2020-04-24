@@ -17,6 +17,7 @@ import {
     Speaker,
     Talk,
     GetAllCampsResultAction,
+    GetAllCampsAction,
 } from './types';
 import { Camp } from '../../camps/logic/types';
 
@@ -59,8 +60,9 @@ export const getTalk = (talkId: string): GetTalkAction => ({
     talkId,
 });
 
-export const getAllCamps = (): AppAction => ({
+export const getAllCamps = (monikerName?: string): GetAllCampsAction => ({
     type: ActionTypes.get_all_camps,
+    monikerName,
 });
 
 export const getAllCampsResult = (hasError: boolean, camps?: Camp[]): GetAllCampsResultAction => ({
@@ -69,9 +71,10 @@ export const getAllCampsResult = (hasError: boolean, camps?: Camp[]): GetAllCamp
     camps,
 });
 
-export const getTalksByCamp = (pageNumber: number): GetTalksByCampAction => ({
+export const getTalksByCamp = (pageNumber: number, monikerName?: string): GetTalksByCampAction => ({
     type: ActionTypes.get_talks_by_camp,
     pageNumber,
+    monikerName
 });
 
 export const getTalksByCampResult = (hasError: boolean, talks?: Talk[], totalCount?: number): GetTalksByCampResultAction => ({

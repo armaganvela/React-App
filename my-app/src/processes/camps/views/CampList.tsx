@@ -6,7 +6,7 @@ interface Props {
     camps: Camp[],
     onEditClick: (campId: string) => void;
     onOpenDeleteModalClick: (campId: string) => void;
-    onRedirectToTalks: (campId: string) => void;
+    onRedirectToTalks: (monikerName: string) => void;
 }
 
 const CampList = (props: Props) => {
@@ -30,7 +30,7 @@ const CampList = (props: Props) => {
                     return (
                         <tr key={camp.id}>
                             <td>
-                                <a href='#' onClick={(e: any) => { e.preventDefault(); onRedirectToTalks(camp.id)}}>
+                                <a href='#' onClick={(e: any) => { e.preventDefault(); onRedirectToTalks(camp.moniker)}}>
                                     {camp.name}
                                 </a>
                             </td>

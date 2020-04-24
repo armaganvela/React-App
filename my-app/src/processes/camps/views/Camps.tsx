@@ -48,8 +48,8 @@ const Camps = () => {
     history.push('/camps/add');
   }, []);
 
-  const onRedirectToTalks = useCallback((campId: string) => {
-    history.push('/talks', { campId });
+  const onRedirectToTalks = useCallback((monikerName: string) => {
+    history.push(`/camps/${monikerName}/talks`);
   }, []);
 
   const onClickCloseDeleteModal = useCallback(() => {

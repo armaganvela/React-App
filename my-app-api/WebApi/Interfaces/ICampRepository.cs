@@ -47,7 +47,7 @@ namespace WebApi.Interfaces
 
         Camp GetCampAsync(int campId, bool includeTalks = false);
 
-        PagingModel<Talk> GetTalksByCampAsync(int pageNumber, int pageSize, int? campId, bool includeSpeakers = false);
+        PagingModel<Talk> GetTalksByCampAsync(int pageNumber, int pageSize, string monikerName, bool includeSpeakers = false);
 
         Talk GetTalkByIdAsync(int talkId, bool includeSpeakers = false);
 

@@ -26,6 +26,7 @@ export const routes: { [name in RouteName]: RouteConfig } = {
 	AddCamp: { path: '/camps/add', component: AddEditCamp },
 	UpdateCamp: { path: '/camps/edit/:campId', component: AddEditCamp },
 	Talks: { path: '/talks', component: Talks, exact: true },
+	NewTalks: { path: '/camps/:monikerName/talks', component: Talks, exact: true},
 	AddTalk: { path: '/talks/add', component: AddEditTalk },
 	UpdateTalk: { path: '/talks/edit/:talkId', component: AddEditTalk },
 	Speakers: { path: '/speakers', component: Speakers, exact: true },

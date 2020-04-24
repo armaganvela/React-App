@@ -247,7 +247,7 @@ namespace WebApi.Repositories
             return query.FirstOrDefault();
         }
 
-        public PagingModel<Talk> GetTalksByCampAsync(int pageNumber, int pageSize, int? campId, bool includeSpeakers = false)
+        public PagingModel<Talk> GetTalksByCampAsync(int pageNumber, int pageSize, string monikerName, bool includeSpeakers = false)
         {
             IQueryable<Talk> query = _context.Talks.Include(x => x.Camp);
 
@@ -257,9 +257,9 @@ namespace WebApi.Repositories
                   .Include(t => t.Speaker);
             }
 
-            if (campId.HasValue)
+            if (!string.IsNullOrEmpty(monikerName))
                 query = query
-                  .Where(x => x.CampId == campId);
+                  .Where(x => x.Camp.Moniker == monikerName);
 
             return new PagingModel<Talk>
             {

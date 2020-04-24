@@ -9,20 +9,22 @@ import SearchCriteriaContainer from '../../../components/Containers/SearchCriter
 import SelectInput from '../../../components/FormComponents/SelectInput';
 import DeleteModal from '../../../components/DeleteModal';
 import { openDeleteModal } from '../../services/logic/actions';
+import { useParams } from 'react-router-dom';
 
 const Talks = () => {
     const [talkIdToDelete, setTalkIdToDelete] = useState('');
+    const { monikerName } = useParams();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getTalksByCamp(1));
-        dispatch(getAllCamps());
+        dispatch(getTalksByCamp(1, monikerName));
+        dispatch(getAllCamps(monikerName));
 
         return () => {
             dispatch(clearSearchCriteriaTalk());
         };
-    }, []);
+    }, [monikerName]);
 
     const talks = useSelector(state => state.talk.talks);
     const camps = useSelector(state => state.talk.camps);
@@ -47,12 +49,28 @@ const Talks = () => {
     }, [camps]);
 
     const onChangePageNumber = useCallback((pageNumber: number) => {
-        dispatch(getTalksByCamp(pageNumber));
-    }, [pageNumber]);
+        dispatch(getTalksByCamp(pageNumber, camp ? camp.moniker : monikerName));
+
+        if (!camp) {
+            history.push(`/talks`);
+        }
+
+        else {
+            history.push(`/camps/${camp?.moniker}/talks`);
+        }
+    }, [pageNumber, monikerName, camp]);
 
     const onClickTalkSearch = useCallback(() => {
-        dispatch(getTalksByCamp(1));
-    }, [camp]);
+        dispatch(getTalksByCamp(1, camp ? camp.moniker : monikerName));
+        
+        if (!camp) {
+            history.push(`/talks`);
+        }
+
+        else {
+            history.push(`/camps/${camp?.moniker}/talks`);
+        }
+    }, [camp, monikerName]);
 
     const onClickCloseDeleteModal = useCallback(() => {
         dispatch(openDeleteModal(false));

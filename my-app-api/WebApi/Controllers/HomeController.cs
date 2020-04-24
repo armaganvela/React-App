@@ -137,9 +137,9 @@ namespace WebApi.Controllers
 
         [Route("getTalksByCamp")]
         [HttpGet]
-        public IHttpActionResult GetTalksByCamp(int pageNumber, int pageSize, int? campId = null)
+        public IHttpActionResult GetTalksByCamp([FromUri]FetchCampsBindingModel bindingModel)
         {
-            PagingModel<Talk> talks = _repository.GetTalksByCampAsync(pageNumber, pageSize, campId, true);
+            PagingModel<Talk> talks = _repository.GetTalksByCampAsync(bindingModel.PageNumber, bindingModel.PageSize, bindingModel.MonikerName, true);
 
             PagingBindingModel<TalkBindingModel> talkPagingModel = new PagingBindingModel<TalkBindingModel>
             {

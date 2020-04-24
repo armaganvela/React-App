@@ -3,15 +3,12 @@ import { morphism } from 'morphism';
 import { get_talks_by_camp_url, get_all_speakers, get_talk_url, add_talk_url, get_all_camps, update_talk_url, delete_talk_url } from '../../../config/urls';
 import { talkMap, speakerMap } from './mapper';
 import { campMap } from '../../camps/logic/mapper';
-import { Camp } from '../../camps/logic/types';
 
-export const getTalksByCampApi = async (pageNumber: number, camp: Camp) => {
-	const campId = camp ? camp.id : undefined;
-
+export const getTalksByCampApi = async (pageNumber: number, monikerName?: string) => {
 	const options: AxiosRequestConfig = {
 		url: get_talks_by_camp_url,
 		method: 'GET',
-		params: { campId, pageNumber, pageSize: 5 },
+		params: { monikerName, pageNumber, pageSize: 5 },
 	};
 
 	const response = await axios(options);

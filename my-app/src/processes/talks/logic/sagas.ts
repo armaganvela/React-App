@@ -8,7 +8,7 @@ import {
 	deleteTalkResult,
 	changeSearchCamp,
 } from './actions';
-import { ActionTypes, GetTalksByCampAction, GetTalkAction, DeleteTalkAction } from './types';
+import { ActionTypes, GetTalksByCampAction, GetTalkAction, DeleteTalkAction, GetAllCampsAction } from './types';
 import { getTalksByCampApi, getAllSpeakersApi, getTalkApi, getAllCampsApi, addTalkApi, updateTalkApi, deleteTalkApi } from './api';
 import {
 	hideProgress,
@@ -24,10 +24,9 @@ function* getTalksByCamp(action: GetTalksByCampAction) {
 	try {
 		yield put(showProgress(""));
 
-        const { pageNumber } = action;
-		const { camp } = yield select((state: AppState) => state.talk.searchCriteria);
+		const { pageNumber, monikerName } = action;
 
-		const response = yield call(getTalksByCampApi, pageNumber, camp);
+		const response = yield call(getTalksByCampApi, pageNumber, monikerName);
 
 		yield put(getTalksByCampResult(false, response.items, response.totalCount));
 	} catch (e) {
@@ -53,13 +52,16 @@ function* getAllSpeakersSaga() {
 	}
 }
 
-function* getAllCampsSaga() {
+function* getAllCampsSaga(action: GetAllCampsAction) {
 	try {
 		yield put(showProgress(""));
+		const { monikerName } = action;
 
 		const response = yield call(getAllCampsApi);
-
 		yield put(getAllCampsResult(false, response));
+
+		const selectedCamp = response.find((x: any) => x.moniker === monikerName);
+		yield put(changeSearchCamp(selectedCamp));
 	} catch (e) {
 		yield (put(showHttpErrorAlert(e)));
 		yield put(getAllCampsResult(true));
