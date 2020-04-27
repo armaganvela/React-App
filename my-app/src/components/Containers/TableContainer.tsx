@@ -16,7 +16,7 @@ const TableContainer = (props: Props) => {
 
     return (
         <>
-            <h2>{title}</h2>
+            <h2 style={{marginTop: '20px'}}>{title}</h2>
             {actions}
             {children}
             {paging &&

@@ -26,6 +26,10 @@ namespace WebApi.BindingModels
         public CityBindingModel City { get; set; }
 
         public int? CityId { get; set; }
+
+        public string Longitude { get; set; }
+
+        public string Latitude { get; set; }
     }
 
     public class TalkBindingModel

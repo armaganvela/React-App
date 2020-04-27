@@ -14,6 +14,16 @@ export const campMap = {
         path: 'City',
         fn: (value: City) => morphism(cityMap, value),
     },
+    location: { 
+        lng: {
+            path: 'Longitude',
+            fn: (value: any) => Number(value),
+        },
+        lat: {
+            path: 'Latitude',
+            fn: (value: any) => Number(value),
+        },
+     }
 };
 
 export const countryMap = {

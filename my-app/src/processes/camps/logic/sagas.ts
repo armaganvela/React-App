@@ -37,9 +37,11 @@ function* fetchCampsSaga() {
 
 function* addCampSaga() {
 	try {
-		const { name, moniker, eventDate, country, city } = yield select((state: AppState) => state.camp.draftCamp);
+		const { name, moniker, eventDate, country, city, location } = yield select((state: AppState) => state.camp.draftCamp);
 
-		yield call(addCampApi, name, moniker, eventDate, country, city);
+		const { lng, lat } = location;
+
+		yield call(addCampApi, name, moniker, eventDate, country, city, lng, lat);
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		history.push('/');
 	} catch (e) {
@@ -50,9 +52,11 @@ function* addCampSaga() {
 
 function* updateCampSaga() {
 	try {
-		const { id, name, moniker, eventDate, country, city } = yield select((state: AppState) => state.camp.draftCamp);
+		const { id, name, moniker, eventDate, country, city, location } = yield select((state: AppState) => state.camp.draftCamp);
 
-		yield call(updateCampApi, id, name, moniker, eventDate, country, city);
+		const { lng, lat } = location;
+
+		yield call(updateCampApi, id, name, moniker, eventDate, country, city, lng, lat);
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		history.push('/');
 	} catch (e) {

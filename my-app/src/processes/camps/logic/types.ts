@@ -6,6 +6,7 @@ export enum ActionTypes {
 	change_draft_event_date = 'CAMP_CHANGE_DRAFT_EVENT_DATE',
 	change_draft_country = 'CAMP_CHANGE_DRAFT_COUNTRY',
 	change_draft_city = 'CAMP_CHANGE_DRAFT_CITY',
+	change_draft_location = 'CAMP_CHANGE_DRAFT_LOCATION',
 
 	change_search_event_date = 'CAMP_CHANGE_SEARCH_EVENT_DATE',
 
@@ -47,6 +48,11 @@ export interface ChangeDraftEventDateAction extends AppAction {
 	type: ActionTypes.change_draft_event_date,
 	eventDate?: Date;
 }
+
+export interface ChangeDraftLocationAction extends AppAction {
+	type: ActionTypes.change_draft_location,
+	location?:  { lng: any, lat: any },
+};
 
 export interface ChangeDraftEventCountryAction extends AppAction {
 	type: ActionTypes.change_draft_country,
@@ -122,6 +128,7 @@ export type Action =
 	& ChangeDraftEventDateAction
 	& ChangeDraftEventCountryAction
 	& ChangeSearchEventDateAction
+	& ChangeDraftLocationAction
 	& ChangeDraftCityAction
 	& SetDraftCampAction
 	& GetCampAction
@@ -141,6 +148,7 @@ export interface Camp {
 	eventDate?: Date;
 	country?: Country;
 	city?: City;
+	location?: { lng: any, lat: any }
 }
 
 export interface Country {

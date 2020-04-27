@@ -783,3 +783,4 @@ C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.pdb
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.csprojAssemblyReference.cache
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x1.resources
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.csproj.GenerateResource.cache
+C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x2.resources

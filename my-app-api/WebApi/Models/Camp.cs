@@ -22,9 +22,12 @@ namespace WebApi.Models
         [Column(TypeName = "Date")]
         public DateTime? EventDate { get; set; }
 
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+
         public List<Talk> Talks { get; set; }
 
-        public Camp Update(int campId, string name, string monikerName, DateTime? eventDate, Country country, City city)
+        public Camp Update(int campId, string name, string monikerName, DateTime? eventDate, Country country, City city, string latitude, string longitude)
         {
             CampId = campId;
             Name = name;
@@ -34,11 +37,13 @@ namespace WebApi.Models
             Country = country;
             CityId = city?.CityId;
             City = city;
+            Latitude = latitude;
+            Longitude = longitude;
 
             return this;
         }
 
-        public static Camp NewInstance(string name, string monikerName, DateTime? eventDate, Country country, City city)
+        public static Camp NewInstance(string name, string monikerName, DateTime? eventDate, Country country, City city, string latitude, string longitude)
         {
             return new Camp()
             {
@@ -49,6 +54,8 @@ namespace WebApi.Models
                 Country = country,
                 City = city,
                 CityId = city?.CityId,
+                Longitude = longitude,
+                Latitude = latitude,
             };
         }
     }

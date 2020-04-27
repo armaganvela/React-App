@@ -5,6 +5,7 @@ import {
     ChangeDraftEventDateAction,
     ChangeDraftMonikerNameAction,
     ChangeDraftEventCountryAction,
+    ChangeDraftLocationAction,
     ChangeSearchEventDateAction,
     SetDraftCampAction,
     GetCampAction,
@@ -35,6 +36,11 @@ export const changeDraftMonikerName = (monikerName: string): ChangeDraftMonikerN
 export const changeDraftEventDate = (eventDate?: Date): ChangeDraftEventDateAction => ({
     type: ActionTypes.change_draft_event_date,
     eventDate
+});
+
+export const changeDraftLocation = (location?: { lng: any, lat: any }): ChangeDraftLocationAction => ({
+    type: ActionTypes.change_draft_location,
+    location
 });
 
 export const changeDraftCoutry = (country?: Country): ChangeDraftEventCountryAction => ({

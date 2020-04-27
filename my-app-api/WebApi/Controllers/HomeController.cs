@@ -71,7 +71,7 @@ namespace WebApi.Controllers
                 city = _repository.GetCity(bindingModel.CityId.Value);
             }
 
-            Camp camp = Camp.NewInstance(bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city);
+            Camp camp = Camp.NewInstance(bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city, bindingModel.Latitude, bindingModel.Longitude);
 
             _repository.AddCamp(camp);
         }
@@ -102,7 +102,7 @@ namespace WebApi.Controllers
             if (camp == null)
                 new BusinessRuleException("Camp is not found");
 
-            Camp newCamp = camp.Update(bindingModel.CampId, bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city);
+            Camp newCamp = camp.Update(bindingModel.CampId, bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city, bindingModel.Latitude, bindingModel.Longitude);
 
             _repository.UpdateCamp(newCamp);
         }

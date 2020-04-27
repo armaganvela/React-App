@@ -12,6 +12,7 @@ const initialState: State = {
 		eventDate: undefined,
 		country: undefined,
 		city: undefined,
+		location: { lng: 28.9784, lat: 41.0082 },
 	},
 
 	camps: [],
@@ -106,6 +107,18 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 					eventDate: action.eventDate
 				}
 			};
+
+			case ActionTypes.change_draft_location:
+				return {
+					...state,
+					draftCamp: {
+						...state.draftCamp,
+						location: {
+							...action.location!
+						}
+					}
+				};
+	
 
 		case ActionTypes.change_search_event_date:
 			return {

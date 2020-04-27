@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useMemo, ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../../config/store';
-import { changeDraftName, changeDraftMonikerName, setDraftCamp, getCamp, addCamp, updateCamp, clearDraftCamp, fetchCountries, changeDraftCoutry, changeDraftEventDate, changeDraftCity, fetchCities } from '../logic/actions';
+import { changeDraftName, changeDraftMonikerName, getCamp, addCamp, updateCamp, clearDraftCamp, fetchCountries, changeDraftCoutry, changeDraftEventDate, changeDraftCity, fetchCities, changeDraftLocation } from '../logic/actions';
 import TextInput from '../../../components/FormComponents/TextInput';
 import FormContainer from '../../../components/Containers/FormContainer';
 import SelectInput from '../../../components/FormComponents/SelectInput';
 import DateTimePicker from '../../../components/FormComponents/DateTimePicker';
 import Spinner from '../../../components/Spinner';
+import GoogleMapComponent from '../../../components/GoogleMap';
 
 const AddEditCamp = () => {
     const [errors, setErrors] = useState({} as any);
@@ -14,6 +15,7 @@ const AddEditCamp = () => {
     const monikerName = useSelector(state => state.camp.draftCamp.moniker);
     const name = useSelector(state => state.camp.draftCamp.name);
     const eventDate = useSelector(state => state.camp.draftCamp.eventDate);
+    const location = useSelector(state => state.camp.draftCamp.location);
 
     const countries = useSelector(state => state.camp.countries);
     const country = useSelector(state => state.camp.draftCamp.country);
@@ -32,7 +34,7 @@ const AddEditCamp = () => {
         dispatch(fetchCountries());
 
         if (isEditing) {
-                dispatch(getCamp(campId!));
+            dispatch(getCamp(campId!));
         }
 
         return () => {
@@ -53,7 +55,6 @@ const AddEditCamp = () => {
     }, []);
 
     const onCountryChange = useCallback((event: any) => {
-        debugger;
         const country = countries.find(x => x.id.toString() === event.currentTarget.value);
         dispatch(changeDraftCoutry(country));
         dispatch(fetchCities(country?.id));
@@ -90,6 +91,13 @@ const AddEditCamp = () => {
         setErrors(errors);
         return Object.keys(errors).length === 0;
     }, [name, monikerName]);
+
+
+    const handleClickMaps = useCallback((e: any) => {
+        let latitude = e.latLng.lat();
+        let longtitude = e.latLng.lng();
+        dispatch(changeDraftLocation({ lng: longtitude, lat: latitude }));
+    }, []);
 
     return (
         <>
@@ -132,7 +140,19 @@ const AddEditCamp = () => {
                         onChange={onCityChange}
                         defaultOption="-Select City--"
                     />
+
                     <DateTimePicker date={eventDate} onChangeDateTime={onChangeEventDate} label="Event Date" placeHolder="Select Event Date" />
+
+                    <label>Select Location</label>
+                    <GoogleMapComponent
+                        label = "Location"
+                        location={location}
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsVEt7az6zvhO-yXgvLiVJdRUTfp12eNI"
+                        loadingElement={<div style={{ height: `100%` }} />}
+                        containerElement={<div style={{ height: `400px`, marginTop: '10px', marginBottom: '30px' }} />}
+                        mapElement={<div style={{ height: `100%` }} />}
+                        onClick={handleClickMaps}
+                    />
                 </FormContainer>
             }
         </>

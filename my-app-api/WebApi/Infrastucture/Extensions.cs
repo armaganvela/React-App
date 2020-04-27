@@ -29,6 +29,8 @@ namespace WebApi.Infrastucture
                 Country = model.Country?.ToCountryBindingModel(),
                 CityId = model.CityId,
                 City = model.City?.ToCityBindingModel(),
+                Latitude = model.Latitude,
+                Longitude = model.Longitude
             };
 
             return result;

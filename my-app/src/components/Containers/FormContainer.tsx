@@ -11,7 +11,7 @@ const FormContainer = (props: Props) => {
     const { title, children, actions, onSubmit } = props;
 
     return <form onSubmit={onSubmit}>
-        <h2>{title}</h2>
+        <h2 style={{marginTop: '20px'}}>{title}</h2>
         {children}
         {actions || <button type="submit" className="btn btn-primary">Save</button>}
     </form>

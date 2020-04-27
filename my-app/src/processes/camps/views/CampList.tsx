@@ -21,6 +21,7 @@ const CampList = (props: Props) => {
                     <th>Country</th>
                     <th>City</th>
                     <th>Event Date</th>
+                    <th>Coordinates(lat, lng)</th>
                     <th />
                     <th />
                 </tr>
@@ -38,6 +39,7 @@ const CampList = (props: Props) => {
                             <td>{camp.country?.name}</td>
                             <td>{camp.city?.name}</td>
                             <td>{camp.eventDate ? moment(camp.eventDate).format('L') : ''}</td>
+                            <td>{camp.location?.lat + ',' + camp.location?.lng}</td>
                             <td>
                                 <button
                                     className="btn btn-outline-danger"
