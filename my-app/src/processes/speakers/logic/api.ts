@@ -30,21 +30,21 @@ export const getSpeakerApi = async (speakerId: string) => {
 	return morphism(speakerMap, response.data);
 };
 
-export const addSpeakerApi = async (firstName: string, lastName: string, middleName: string, company: string) => {
+export const addSpeakerApi = async (firstName: string, lastName: string, middleName: string, company: string, attachmentId: string) => {
 	const options: AxiosRequestConfig = {
 		url: add_speaker_url,
 		method: 'POST',
-		data: { firstName, middleName, lastName, company }
+		data: { firstName, middleName, lastName, company, attachmentId }
 	};
 
 	await axios(options);
 };
 
-export const updateSpeakerApi = async (speakerId: string, firstName: string, lastName: string, middleName: string, company: string) => {
+export const updateSpeakerApi = async (speakerId: string, firstName: string, lastName: string, middleName: string, company: string, attachmentId: string) => {
 	const options: AxiosRequestConfig = {
 		url: update_speaker_url,
 		method: 'POST',
-		data: { speakerId, firstName, middleName, lastName, company }
+		data: { speakerId, firstName, middleName, lastName, company, attachmentId }
 	};
 
 	await axios(options);

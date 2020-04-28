@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApi.BindingModels;
@@ -37,7 +39,7 @@ namespace WebApi.Controllers
                 TotalCount = camps.TotalCount,
             };
 
-            return Ok(camps);
+            return Ok(campPagingModel);
         }
 
         [Route("getAllCamps")]
@@ -56,8 +58,9 @@ namespace WebApi.Controllers
         {
             Country country = null;
             City city = null;
+            Attachment attachment = null;
 
-            if(_repository.IsDublicateMonikerName(bindingModel.Moniker))
+            if (_repository.IsDublicateMonikerName(bindingModel.Moniker))
                 throw new BusinessRuleException("Moniker Name can not be dublicated");
 
             if (bindingModel.CountryId.HasValue)
@@ -71,7 +74,12 @@ namespace WebApi.Controllers
                 city = _repository.GetCity(bindingModel.CityId.Value);
             }
 
-            Camp camp = Camp.NewInstance(bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city, bindingModel.Latitude, bindingModel.Longitude);
+            if (bindingModel.AttachmentId.HasValue)
+            {
+                attachment = _repository.GetAttachment(bindingModel.AttachmentId.Value);
+            }
+
+            Camp camp = Camp.NewInstance(bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city, attachment, bindingModel.Latitude, bindingModel.Longitude);
 
             _repository.AddCamp(camp);
         }
@@ -81,7 +89,7 @@ namespace WebApi.Controllers
         public void UpdateCamp(CampBindingModel bindingModel)
         {
             Country country = null;
-            
+
             if (bindingModel.CountryId.HasValue)
             {
                 country = _repository.GetCountry(bindingModel.CountryId.Value);
@@ -94,6 +102,13 @@ namespace WebApi.Controllers
                 city = _repository.GetCity(bindingModel.CityId.Value);
             }
 
+            Attachment attachment = null;
+
+            if (bindingModel.AttachmentId.HasValue)
+            {
+                attachment = _repository.GetAttachment(bindingModel.AttachmentId.Value);
+            }
+
             Camp camp = _repository.GetCamp(bindingModel.CampId);
 
             if (_repository.IsDublicateMonikerName(bindingModel.Moniker, camp.CampId, true))
@@ -102,7 +117,7 @@ namespace WebApi.Controllers
             if (camp == null)
                 new BusinessRuleException("Camp is not found");
 
-            Camp newCamp = camp.Update(bindingModel.CampId, bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city, bindingModel.Latitude, bindingModel.Longitude);
+            Camp newCamp = camp.Update(bindingModel.CampId, bindingModel.Name, bindingModel.Moniker, bindingModel.EventDate, country, city, attachment, bindingModel.Latitude, bindingModel.Longitude);
 
             _repository.UpdateCamp(newCamp);
         }
@@ -243,7 +258,14 @@ namespace WebApi.Controllers
         [HttpPost]
         public IHttpActionResult AddSpeaker(SpeakerBindingModel bindingModel)
         {
-            Speaker speaker = Speaker.Create(bindingModel.FirstName, bindingModel.LastName, bindingModel.MiddleName, bindingModel.Company);
+            Attachment attachment = null;
+
+            if (bindingModel.AttachmentId.HasValue)
+            {
+                attachment = _repository.GetAttachment(bindingModel.AttachmentId.Value);
+            }
+
+            Speaker speaker = Speaker.Create(bindingModel.FirstName, bindingModel.LastName, bindingModel.MiddleName, bindingModel.Company, attachment);
 
             _repository.AddSpeaker(speaker);
 
@@ -254,9 +276,16 @@ namespace WebApi.Controllers
         [HttpPost]
         public IHttpActionResult UpdateSpeaker(SpeakerBindingModel bindingModel)
         {
+            Attachment attachment = null;
+
+            if (bindingModel.AttachmentId.HasValue)
+            {
+                attachment = _repository.GetAttachment(bindingModel.AttachmentId.Value);
+            }
+
             Speaker speaker = _repository.GetSpeaker(bindingModel.SpeakerId);
 
-            speaker = speaker.Update(bindingModel.SpeakerId, bindingModel.FirstName, bindingModel.LastName, bindingModel.MiddleName, bindingModel.Company);
+            speaker = speaker.Update(bindingModel.SpeakerId, bindingModel.FirstName, bindingModel.LastName, bindingModel.MiddleName, bindingModel.Company, attachment);
 
             _repository.UpdateSpeaker(speaker);
 
@@ -385,6 +414,32 @@ namespace WebApi.Controllers
 
             _repository.DeleteCity(city);
 
+            return Ok();
+        }
+
+        [Route("addAttachment")]
+        [HttpPost]
+        public IHttpActionResult AddAttachment()
+        {
+            HttpResponseMessage result = null;
+            var httpRequest = HttpContext.Current.Request;
+            HttpPostedFile file = httpRequest.Files[0];
+
+            byte[] fileData = null;
+            using (var binaryReader = new BinaryReader(file.InputStream))
+            {
+                fileData = binaryReader.ReadBytes(file.ContentLength);
+            }
+
+            int attachmentId = _repository.AddAttachment(new Attachment() { BlobContent = fileData, Extension = file.ContentType, Title = file.FileName });
+
+            return Ok(new { attachmentId, attachmentTitle = file.FileName, attachmentContent = Convert.ToBase64String(fileData) });
+        }
+
+        [Route("deleteAttachment")]
+        [HttpPost]
+        public IHttpActionResult DeleteAttachment()
+        {
             return Ok();
         }
     }

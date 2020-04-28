@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useMemo, ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../../config/store';
-import { changeDraftName, changeDraftMonikerName, getCamp, addCamp, updateCamp, clearDraftCamp, fetchCountries, changeDraftCoutry, changeDraftEventDate, changeDraftCity, fetchCities, changeDraftLocation } from '../logic/actions';
+import { changeDraftName, changeDraftMonikerName, getCamp, addCamp, updateCamp, clearDraftCamp, fetchCountries, changeDraftCoutry, changeDraftEventDate, changeDraftCity, fetchCities, changeDraftLocation, changeDraftFile } from '../logic/actions';
 import TextInput from '../../../components/FormComponents/TextInput';
 import FormContainer from '../../../components/Containers/FormContainer';
 import SelectInput from '../../../components/FormComponents/SelectInput';
 import DateTimePicker from '../../../components/FormComponents/DateTimePicker';
 import Spinner from '../../../components/Spinner';
 import GoogleMapComponent from '../../../components/GoogleMap';
+import DropZone from '../../../components/DropZoneComponent';
 
 const AddEditCamp = () => {
     const [errors, setErrors] = useState({} as any);
@@ -16,6 +17,8 @@ const AddEditCamp = () => {
     const name = useSelector(state => state.camp.draftCamp.name);
     const eventDate = useSelector(state => state.camp.draftCamp.eventDate);
     const location = useSelector(state => state.camp.draftCamp.location);
+    const fileTitle = useSelector(state => state.camp.draftCamp.fileTitle);
+    const attachmentContent = useSelector(state => state.camp.draftCamp.attachmentContent);
 
     const countries = useSelector(state => state.camp.countries);
     const country = useSelector(state => state.camp.draftCamp.country);
@@ -65,6 +68,9 @@ const AddEditCamp = () => {
         dispatch(changeDraftCity(city));
     }, [cities]);
 
+    const onFileChange = useCallback((file?: File) => {
+        dispatch(changeDraftFile(file));
+    }, [cities]);
 
     const onAddCamp = useCallback((event: any) => {
         event.preventDefault();
@@ -140,12 +146,12 @@ const AddEditCamp = () => {
                         onChange={onCityChange}
                         defaultOption="-Select City--"
                     />
-
                     <DateTimePicker date={eventDate} onChangeDateTime={onChangeEventDate} label="Event Date" placeHolder="Select Event Date" />
-
+                    <DropZone title={fileTitle} attachmentContent={attachmentContent} onDrop={onFileChange} />
+                    
                     <label>Select Location</label>
                     <GoogleMapComponent
-                        label = "Location"
+                        label="Location"
                         location={location}
                         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsVEt7az6zvhO-yXgvLiVJdRUTfp12eNI"
                         loadingElement={<div style={{ height: `100%` }} />}

@@ -30,6 +30,12 @@ namespace WebApi.BindingModels
         public string Longitude { get; set; }
 
         public string Latitude { get; set; }
+
+        public int? AttachmentId { get; set; }
+
+        public string AttachmentTitle { get; set; }
+
+        public string AttachmentContent { get; set; }
     }
 
     public class TalkBindingModel
@@ -53,6 +59,10 @@ namespace WebApi.BindingModels
         public string LastName { get; set; }
         public string MiddleName { get; set; }
         public string Company { get; set; }
+
+        public int? AttachmentId { get; set; }
+        public string AttachmentTitle { get; set; }
+        public string AttachmentContent { get; set; }
     }
 
     public class FetchSpeakerBindingModel

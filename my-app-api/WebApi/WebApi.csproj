@@ -220,7 +220,12 @@
     <Compile Include="Migrations\202004271506116_x2.Designer.cs">
       <DependentUpon>202004271506116_x2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004281232012_x3.cs" />
+    <Compile Include="Migrations\202004281232012_x3.Designer.cs">
+      <DependentUpon>202004281232012_x3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Camp.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Country.cs" />
@@ -262,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004271506116_x2.resx">
       <DependentUpon>202004271506116_x2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004281232012_x3.resx">
+      <DependentUpon>202004281232012_x3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

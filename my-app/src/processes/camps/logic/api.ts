@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { morphism } from 'morphism';
 import {
-	get_camps_url, get_camp_url, add_camp_url, update_camp_url, delete_camp_url, get_countries_url, get_talks_by_camp_url, get_all_speakers, get_cities_by_country
+	get_camps_url, get_camp_url, add_camp_url, update_camp_url, delete_camp_url, get_countries_url, get_talks_by_camp_url, get_all_speakers, get_cities_by_country, upload_attachment_url
 } from '../../../config/urls';
 import { campMap, countryMap, cityMap } from './mapper';
 import { Country, City } from './types';
@@ -54,21 +54,21 @@ export const getCampApi = async (campId: string) => {
 	return morphism(campMap, response.data);
 };
 
-export const addCampApi = async (name: string, moniker: string, eventDate: string, country: Country, city: City, lng: string, lat: string) => {
+export const addCampApi = async (name: string, moniker: string, eventDate: string, country: Country, city: City, lng: string, lat: string, attachmentId: string) => {
 	const options: AxiosRequestConfig = {
 		url: add_camp_url,
 		method: 'POST',
-		data: { name: name, moniker: moniker, eventDate: eventDate, CountryId: country ? country.id : undefined, CityId: city ? city.id : undefined, Longitude: lng, Latitude: lat },
+		data: { name: name, moniker: moniker, eventDate: eventDate, CountryId: country ? country.id : undefined, CityId: city ? city.id : undefined, Longitude: lng, Latitude: lat, AttachmentId: attachmentId },
 	};
 
 	const response = await axios(options);
 };
 
-export const updateCampApi = async (id: string, name: string, moniker: string, eventDate: string, country: Country, city: City, lng: string, lat: string) => {
+export const updateCampApi = async (id: string, name: string, moniker: string, eventDate: string, country: Country, city: City, lng: string, lat: string, attachmentId: string) => {
 	const options: AxiosRequestConfig = {
 		url: update_camp_url,
 		method: 'POST',
-		data: { campId: id, name: name, moniker: moniker, eventDate: eventDate, CountryId: country ? country.id : undefined, CityId: city ? city.id : undefined, Longitude: lng, Latitude: lat },
+		data: { campId: id, name: name, moniker: moniker, eventDate: eventDate, CountryId: country ? country.id : undefined, CityId: city ? city.id : undefined, Longitude: lng, Latitude: lat,AttachmentId: attachmentId  },
 	};
 
 	const response = await axios(options);
@@ -89,3 +89,15 @@ export const deleteCampApi = async (campId: string) => {
 
 	await axios(options);
 };
+
+export const uploadAttachmentApi = async (file: File) => {
+	const formData = new FormData();
+	formData.append('file', file);
+
+	return await axios.post(upload_attachment_url, formData, {
+		headers: {
+			'Content-Type': 'multipart/form-data'
+		}
+	})
+};
+

@@ -7,7 +7,12 @@ const initialState: State = {
         firstName: '',
         lastName: '',
         middleName: '',
-        company: ''
+        company: '',
+
+        file: undefined,
+        serverFileId: undefined,
+        fileTitle: undefined,
+        attachmentContent: undefined,
     },
     searchCriteria: {
         firstName: ''
@@ -89,6 +94,18 @@ const speaker: Reducer<State, Action> = (state = initialState, action) => {
                     ...state.draftSpeaker,
                     ...action.speaker,
                 },
+            };
+
+        case ActionTypes.upload_draft_file_result:
+            if (action.hasError) return state;
+            return {
+                ...state,
+                draftSpeaker: {
+                    ...state.draftSpeaker,
+                    serverFileId: action.fileServerId,
+                    fileTitle: action.fileTitle,
+                    attachmentContent: action.attachmentContent
+                }
             };
 
         case ActionTypes.set_draft_speaker:

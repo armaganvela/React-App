@@ -16,6 +16,9 @@ namespace WebApi.Models
         public int? CityId { get; set; }
         public City City { get; set; }
 
+        public int? AttachmentId { get; set; }
+        public Attachment Attachment { get; set; }
+
         public string Name { get; set; }
         public string Moniker { get; set; }
 
@@ -27,7 +30,7 @@ namespace WebApi.Models
 
         public List<Talk> Talks { get; set; }
 
-        public Camp Update(int campId, string name, string monikerName, DateTime? eventDate, Country country, City city, string latitude, string longitude)
+        public Camp Update(int campId, string name, string monikerName, DateTime? eventDate, Country country, City city, Attachment attachment, string latitude, string longitude)
         {
             CampId = campId;
             Name = name;
@@ -37,13 +40,15 @@ namespace WebApi.Models
             Country = country;
             CityId = city?.CityId;
             City = city;
+            Attachment = attachment;
+            AttachmentId = attachment?.AttachmentId;
             Latitude = latitude;
             Longitude = longitude;
 
             return this;
         }
 
-        public static Camp NewInstance(string name, string monikerName, DateTime? eventDate, Country country, City city, string latitude, string longitude)
+        public static Camp NewInstance(string name, string monikerName, DateTime? eventDate, Country country, City city, Attachment attachment, string latitude, string longitude)
         {
             return new Camp()
             {
@@ -54,6 +59,8 @@ namespace WebApi.Models
                 Country = country,
                 City = city,
                 CityId = city?.CityId,
+                Attachment = attachment,
+                AttachmentId = attachment?.AttachmentId,
                 Longitude = longitude,
                 Latitude = latitude,
             };

@@ -30,7 +30,10 @@ namespace WebApi.Infrastucture
                 CityId = model.CityId,
                 City = model.City?.ToCityBindingModel(),
                 Latitude = model.Latitude,
-                Longitude = model.Longitude
+                Longitude = model.Longitude,
+                AttachmentId = model.AttachmentId,
+                AttachmentTitle = model.Attachment?.Title,
+                AttachmentContent = model.Attachment != null ? Convert.ToBase64String(model.Attachment.BlobContent) : null,
             };
 
             return result;
@@ -71,6 +74,9 @@ namespace WebApi.Infrastucture
                FirstName = model.FirstName,
                LastName = model.LastName,
                MiddleName = model.MiddleName,
+               AttachmentId = model.Attachment?.AttachmentId,
+               AttachmentTitle = model.Attachment?.Title,
+               AttachmentContent = model.Attachment != null ? Convert.ToBase64String(model.Attachment.BlobContent) : null,
             };
 
             return result;

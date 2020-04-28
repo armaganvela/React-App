@@ -7,6 +7,7 @@ export enum ActionTypes {
 	change_draft_country = 'CAMP_CHANGE_DRAFT_COUNTRY',
 	change_draft_city = 'CAMP_CHANGE_DRAFT_CITY',
 	change_draft_location = 'CAMP_CHANGE_DRAFT_LOCATION',
+	change_draft_file = 'CAMP_CHANGE_DRAFT_FILE',
 
 	change_search_event_date = 'CAMP_CHANGE_SEARCH_EVENT_DATE',
 
@@ -31,6 +32,8 @@ export enum ActionTypes {
 	delete_camp = 'CAMP_DELETE_CAMP',
 	delete_camp_result = 'CAMP_DELETE_CAMP_RESULT',
 
+	upload_file_result = 'CAMP_UPLOAD_FILE_RESULT',
+
 	clear_search_criteria = 'CAMP_SEARCH_CRITERIA',
 }
 
@@ -52,6 +55,11 @@ export interface ChangeDraftEventDateAction extends AppAction {
 export interface ChangeDraftLocationAction extends AppAction {
 	type: ActionTypes.change_draft_location,
 	location?:  { lng: any, lat: any },
+};
+
+export interface ChangeDraftFileAction extends AppAction {
+	type: ActionTypes.change_draft_file,
+	file?:  File,
 };
 
 export interface ChangeDraftEventCountryAction extends AppAction {
@@ -121,6 +129,13 @@ export interface DeleteCampResultAction extends AppResultAction {
 	campId?: string;
 }
 
+export interface UploadFileResultAction extends AppResultAction {
+	type: ActionTypes.upload_file_result;
+	fileServerId?: string;
+	fileTitle?: string;
+	attachmentContent?: string;
+}
+
 export type Action =
 	AppAction
 	& ChangeDraftNameAction
@@ -130,6 +145,7 @@ export type Action =
 	& ChangeSearchEventDateAction
 	& ChangeDraftLocationAction
 	& ChangeDraftCityAction
+	& ChangeDraftFileAction
 	& SetDraftCampAction
 	& GetCampAction
 	& GetCampResultAction
@@ -139,7 +155,8 @@ export type Action =
 	& FetchCitiesResultAction
 	& FetchCountriesResultAction
 	& DeleteCampAction
-	& DeleteCampResultAction;
+	& DeleteCampResultAction
+	& UploadFileResultAction;
 	
 export interface Camp {
 	id: string;
@@ -148,7 +165,11 @@ export interface Camp {
 	eventDate?: Date;
 	country?: Country;
 	city?: City;
-	location?: { lng: any, lat: any }
+	location?: { lng: any, lat: any };
+	file?: File;
+	serverFileId?: string;
+	fileTitle?: string;
+	attachmentContent?: string
 }
 
 export interface Country {

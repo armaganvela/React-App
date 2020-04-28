@@ -15,6 +15,9 @@ export enum ActionTypes {
     get_speaker = 'speaker_get_speaker',
     get_speaker_result = 'speaker_get_speaker_result',
 
+    upload_draft_file = 'speaker_upload_draft_file',
+    upload_draft_file_result = 'speaker_upload_draft_file_result',
+
     set_draft_speaker = 'speaker_set_draft_speaker',
     clear_draft_speaker = 'speaker_clear_draft_speaker',
 
@@ -75,6 +78,19 @@ export interface SetDraftSpeakerAction extends AppAction {
     speaker: Speaker;
 }
 
+
+export interface UploadFileAction extends AppAction {
+    type: ActionTypes.upload_draft_file;
+    file?: File;
+}
+
+export interface UploadFileResultAction extends AppResultAction {
+	type: ActionTypes.upload_draft_file_result;
+	fileServerId?: string;
+	fileTitle?: string;
+	attachmentContent?: string;
+}
+
 export type Action =
     AppAction
     & ChangeDraftFirstNameAction
@@ -84,6 +100,8 @@ export type Action =
     & ChangeSearchFirstNameAction
     & GetSpeakerAction
     & GetSpeakerResultAction
+    & UploadFileAction
+    & UploadFileResultAction
     & SetDraftSpeakerAction
     & FetchSpeakersAction
     & FetchSpeakersResultAction;

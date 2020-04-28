@@ -776,11 +776,12 @@ C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\bin\Microsoft.Owin.Se
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\bin\Microsoft.Owin.Security.Cookies.xml
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\bin\System.Web.Http.Owin.xml
+C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x1.resources
+C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x2.resources
+C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.csproj.GenerateResource.cache
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.csproj.CoreCompileInputs.cache
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.csproj.CopyComplete
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.dll
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.pdb
 C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.csprojAssemblyReference.cache
-C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x1.resources
-C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.csproj.GenerateResource.cache
-C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x2.resources
+C:\Users\user\Documents\GitHub\React-App\my-app-api\WebApi\obj\Debug\WebApi.Migrations.x3.resources

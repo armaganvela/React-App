@@ -13,6 +13,10 @@ const initialState: State = {
 		country: undefined,
 		city: undefined,
 		location: { lng: 28.9784, lat: 41.0082 },
+		file: undefined,
+		serverFileId: undefined,
+		fileTitle: undefined,
+		attachmentContent: undefined,
 	},
 
 	camps: [],
@@ -88,7 +92,7 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 				}
 			};
 
-			
+
 		case ActionTypes.change_draft_city:
 			return {
 				...state,
@@ -108,17 +112,16 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 				}
 			};
 
-			case ActionTypes.change_draft_location:
-				return {
-					...state,
-					draftCamp: {
-						...state.draftCamp,
-						location: {
-							...action.location!
-						}
+		case ActionTypes.change_draft_location:
+			return {
+				...state,
+				draftCamp: {
+					...state.draftCamp,
+					location: {
+						...action.location!
 					}
-				};
-	
+				}
+			};
 
 		case ActionTypes.change_search_event_date:
 			return {
@@ -135,6 +138,18 @@ const camp: Reducer<State, Action> = (state = initialState, action) => {
 				draftCamp: {
 					...state.draftCamp,
 					...action.camp
+				}
+			};
+
+		case ActionTypes.upload_file_result:
+			if (action.hasError) return state;
+			return {
+				...state,
+				draftCamp: {
+					...state.draftCamp,
+					serverFileId: action.fileServerId,
+					fileTitle: action.fileTitle,
+					attachmentContent: action.attachmentContent
 				}
 			};
 

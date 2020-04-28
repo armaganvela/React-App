@@ -16,6 +16,7 @@ namespace WebApi.Models
         public DbSet<Talk> Talks { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
 
         public static AppUsersDbContext Create()
         {

@@ -9,6 +9,8 @@ import {
     FetchSpeakersResultAction,
     GetSpeakerAction,
     GetSpeakerResultAction,
+    UploadFileAction,
+    UploadFileResultAction,
     SetDraftSpeakerAction,
     ChangeSearchFirstNameAction,
 } from './types';
@@ -81,4 +83,17 @@ export const updateSpeaker = (): AppAction => ({
 
 export const clearSearchCriteriaSpeaker = (): AppAction => ({
     type: ActionTypes.clear_search_criteria_speaker,
+});
+
+export const uploadFile = (file?: File): UploadFileAction => ({
+    type: ActionTypes.upload_draft_file,
+    file,
+});
+
+export const uploadFileResult = (hasError: boolean, fileServerId?: string, fileTitle?: string, attachmentContent?: string): UploadFileResultAction => ({
+    type: ActionTypes.upload_draft_file_result,
+    hasError,
+    fileServerId,
+fileTitle,
+attachmentContent
 });

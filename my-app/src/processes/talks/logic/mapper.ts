@@ -20,5 +20,8 @@ export const speakerMap = {
     company: 'Company',
     firstName: 'FirstName',
     lastName: 'LastName',
-    middleName: 'MiddleName'
+    middleName: 'MiddleName',
+    serverFileId: 'AttachmentId',
+    fileTitle: 'AttachmentTitle',
+    attachmentContent: 'AttachmentContent'
 };

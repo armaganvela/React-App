@@ -23,7 +23,10 @@ export const campMap = {
             path: 'Latitude',
             fn: (value: any) => Number(value),
         },
-     }
+     },
+     serverFileId: 'AttachmentId',
+     fileTitle: 'AttachmentTitle',
+     attachmentContent: 'AttachmentContent'
 };
 
 export const countryMap = {

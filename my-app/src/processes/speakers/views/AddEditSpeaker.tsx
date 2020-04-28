@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from '../../../config/store';
 import TextInput from '../../../components/FormComponents/TextInput';
 import FormContainer from '../../../components/Containers/FormContainer';
 import Spinner from '../../../components/Spinner';
-import { changeDraftCompanyName, changeDraftFirstName, changeDraftLastName, changeDraftMiddleName, fetchSpeakers, setDraftSpeaker, getSpeaker, clearDraftSpeaker, addSpeaker, updateSpeaker } from '../logic/actions';
+import { changeDraftCompanyName, changeDraftFirstName, changeDraftLastName, changeDraftMiddleName, fetchSpeakers, setDraftSpeaker, getSpeaker, clearDraftSpeaker, addSpeaker, updateSpeaker, uploadFile } from '../logic/actions';
+import DropZone from '../../../components/DropZoneComponent';
 
 const AddEditSpeaker = () => {
     const [errors, setErrors] = useState({} as any);
@@ -13,6 +14,8 @@ const AddEditSpeaker = () => {
     const middleName = useSelector(state => state.speaker.draftSpeaker.middleName);
     const lastName = useSelector(state => state.speaker.draftSpeaker.lastName);
     const company = useSelector(state => state.speaker.draftSpeaker.company);
+    const fileTitle = useSelector(state => state.speaker.draftSpeaker.fileTitle);
+    const attachmentContent = useSelector(state => state.speaker.draftSpeaker.attachmentContent);
 
     const speakers = useSelector(state => state.speaker.speakers);
     const visible = useSelector(state => state.services.progress.visible);
@@ -25,11 +28,7 @@ const AddEditSpeaker = () => {
 
     useEffect(() => {
         if (isEditing) {
-            const speaker = speakers.find(x => x.speakerId.toString() === speakerId);
-            if (speaker)
-                dispatch(setDraftSpeaker(speaker));
-            else
-                dispatch(getSpeaker(speakerId!));
+            dispatch(getSpeaker(speakerId!));
         }
 
         return () => {
@@ -51,6 +50,10 @@ const AddEditSpeaker = () => {
 
     const onChangeCompanyName = useCallback((event: any) => {
         dispatch(changeDraftCompanyName(event.currentTarget.value));
+    }, []);
+
+    const onFileChange = useCallback((file?: File) => {
+        dispatch(uploadFile(file));
     }, []);
 
     const onAddSpeaker = useCallback((event: any) => {
@@ -116,6 +119,7 @@ const AddEditSpeaker = () => {
                         placeholder="Company"
                         error={errors.company}
                     />
+                    <DropZone title={fileTitle} attachmentContent={attachmentContent} onDrop={onFileChange} />
                 </FormContainer>
             }
         </>

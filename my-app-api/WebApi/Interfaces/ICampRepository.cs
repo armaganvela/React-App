@@ -72,5 +72,11 @@ namespace WebApi.Interfaces
         void DeleteCity(City city);
 
         PagingModel<City> FetchCities(int pageSize, int pageNumber, int? countryId);
+
+        int AddAttachment(Attachment attachment);
+
+        void DeleteAttachment(Attachment attachment);
+
+        Attachment GetAttachment(int attachmentId);
     }
 }

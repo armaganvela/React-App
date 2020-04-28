@@ -31,6 +31,8 @@ export const get_city_url = rootURL.concat('api/camp/getCity');
 export const delete_city_url = rootURL.concat('api/camp/deleteCity');
 export const fetch_cities_url = rootURL.concat('api/camp/fetchCities');
 
+export const upload_attachment_url = rootURL.concat('api/camp/addAttachment');
+
 export const login_url = rootURL.concat('token');
 
 

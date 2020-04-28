@@ -6,6 +6,7 @@ import {
     ChangeDraftMonikerNameAction,
     ChangeDraftEventCountryAction,
     ChangeDraftLocationAction,
+    ChangeDraftFileAction,
     ChangeSearchEventDateAction,
     SetDraftCampAction,
     GetCampAction,
@@ -16,6 +17,8 @@ import {
     FetchCountriesResultAction,
     DeleteCampResultAction,
     DeleteCampAction,
+    UploadFileResultAction,
+
     Camp,
     Country,
     ChangeDraftCityAction,
@@ -41,6 +44,11 @@ export const changeDraftEventDate = (eventDate?: Date): ChangeDraftEventDateActi
 export const changeDraftLocation = (location?: { lng: any, lat: any }): ChangeDraftLocationAction => ({
     type: ActionTypes.change_draft_location,
     location
+});
+
+export const changeDraftFile = (file?: File): ChangeDraftFileAction => ({
+    type: ActionTypes.change_draft_file,
+    file
 });
 
 export const changeDraftCoutry = (country?: Country): ChangeDraftEventCountryAction => ({
@@ -117,6 +125,14 @@ export const deleteCampResult = (hasError: boolean, campId?: string): DeleteCamp
     type: ActionTypes.delete_camp_result,
     hasError,
     campId,
+});
+
+export const uploadFileResult = (hasError: boolean, fileServerId?: string, fileTitle?: string, attachmentContent?: string): UploadFileResultAction => ({
+    type: ActionTypes.upload_file_result,
+    hasError,
+    fileServerId,
+    fileTitle,
+    attachmentContent,
 });
 
 export const addCamp = (): AppAction => ({

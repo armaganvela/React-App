@@ -30,7 +30,7 @@ namespace WebApi.Repositories
         public PagingModel<Camp> FetchCamps(int pageNumber, int pageSize, DateTime? eventDate)
         {
             int totalCount = _context.Camps.Count();
-            IQueryable<Camp> camps = _context.Camps.Include(camp => camp.Country).Include(camp => camp.City);
+            IQueryable<Camp> camps = _context.Camps.Include(camp => camp.Country).Include(camp => camp.City).Include(x => x.Attachment);
 
             if (eventDate.HasValue)
                 camps = camps.Where(x => x.EventDate.Value.Year == eventDate.Value.Year &&
@@ -62,13 +62,13 @@ namespace WebApi.Repositories
 
         public Camp GetCamp(int id)
         {
-            return _context.Camps.Include(x => x.Country).Include(x => x.City).FirstOrDefault(x => x.CampId == id);
+            return _context.Camps.Include(x => x.Country).Include(x => x.City).Include(x => x.Attachment).FirstOrDefault(x => x.CampId == id);
         }
 
-        public bool IsDublicateMonikerName(string monikerName, int? campId = null , bool isUpdate = false)
+        public bool IsDublicateMonikerName(string monikerName, int? campId = null, bool isUpdate = false)
         {
-            if(isUpdate && campId.HasValue)
-                return _context.Camps.FirstOrDefault(x => x.Moniker == monikerName && x.CampId != campId ) != null;
+            if (isUpdate && campId.HasValue)
+                return _context.Camps.FirstOrDefault(x => x.Moniker == monikerName && x.CampId != campId) != null;
 
             return _context.Camps.FirstOrDefault(x => x.Moniker == monikerName) != null;
         }
@@ -307,7 +307,7 @@ namespace WebApi.Repositories
 
         public PagingModel<Speaker> FetchSpeakers(int pageSize, int pageNumber, string firstName)
         {
-            IQueryable<Speaker> query = _context.Speakers;
+            IQueryable<Speaker> query = _context.Speakers.Include(x => x.Attachment);
 
             if (!string.IsNullOrEmpty(firstName))
                 query = query
@@ -328,13 +328,35 @@ namespace WebApi.Repositories
             return query.ToList();
         }
 
-
         public Speaker GetSpeaker(int speakerId)
         {
-            var query = _context.Speakers
+            var query = _context.Speakers.Include(t => t.Attachment)
               .Where(t => t.SpeakerId == speakerId);
 
             return query.FirstOrDefault();
+        }
+
+        public int AddAttachment(Attachment attachment)
+        {
+            _context.Attachments.Add(attachment);
+            _context.SaveChanges();
+
+            return attachment.AttachmentId;
+        }
+
+        public Attachment GetAttachment(int attachmentId)
+        {
+            var query = _context.Attachments
+              .Where(t => t.AttachmentId == attachmentId);
+
+            return query.FirstOrDefault();
+        }
+
+        public void DeleteAttachment(Attachment attachment)
+        {
+            _context.Attachments.Remove(attachment);
+
+            _context.SaveChanges();
         }
     }
 }

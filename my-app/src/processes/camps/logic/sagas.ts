@@ -8,9 +8,10 @@ import {
 	fetchCountriesResult,
 	fetchCitiesResult,
 	fetchCities,
+	uploadFileResult,
 } from './actions';
-import { ActionTypes, GetCampAction, DeleteCampAction, ChangeDraftEventCountryAction, FetchCitiesAction } from './types';
-import { getCampsApi, getCampApi, addCampApi, updateCampApi, deleteCampApi, getCountriesApi, getCitiesByCountryApi } from './api';
+import { ActionTypes, GetCampAction, DeleteCampAction, ChangeDraftEventCountryAction, FetchCitiesAction, ChangeDraftFileAction } from './types';
+import { getCampsApi, getCampApi, addCampApi, updateCampApi, deleteCampApi, getCountriesApi, getCitiesByCountryApi, uploadAttachmentApi } from './api';
 import {
 	hideProgress,
 	showProgress,
@@ -27,6 +28,7 @@ function* fetchCampsSaga() {
 		const { eventDate } = yield select((state: AppState) => state.camp.searchCriteria);
 
 		const response = yield call(getCampsApi, pageNumber, eventDate);
+
 		yield put(fetchCampsResult(false, response.items, response.totalCount));
 	} catch (e) {
 		yield put(fetchCampsResult(true));
@@ -37,26 +39,26 @@ function* fetchCampsSaga() {
 
 function* addCampSaga() {
 	try {
-		const { name, moniker, eventDate, country, city, location } = yield select((state: AppState) => state.camp.draftCamp);
+		const { name, moniker, eventDate, country, city, location, serverFileId } = yield select((state: AppState) => state.camp.draftCamp);
 
 		const { lng, lat } = location;
 
-		yield call(addCampApi, name, moniker, eventDate, country, city, lng, lat);
+		yield call(addCampApi, name, moniker, eventDate, country, city, lng, lat, serverFileId);
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		history.push('/');
 	} catch (e) {
 		yield (put(showHttpErrorAlert(e)));
-	} 
+	}
 }
 
 
 function* updateCampSaga() {
 	try {
-		const { id, name, moniker, eventDate, country, city, location } = yield select((state: AppState) => state.camp.draftCamp);
+		const { id, name, moniker, eventDate, country, city, location, serverFileId } = yield select((state: AppState) => state.camp.draftCamp);
 
 		const { lng, lat } = location;
 
-		yield call(updateCampApi, id, name, moniker, eventDate, country, city, lng, lat);
+		yield call(updateCampApi, id, name, moniker, eventDate, country, city, lng, lat, serverFileId);
 		yield put(showAlert('success', 'Operation is successfull', 'Operation is successfull'));
 		history.push('/');
 	} catch (e) {
@@ -113,12 +115,12 @@ function* fetchCountriesSaga() {
 }
 
 function* fetchCitiesSaga(action: FetchCitiesAction) {
-	try { 
+	try {
 		const { countryId } = action;
-		
-        if(!countryId){
+
+		if (!countryId) {
 			yield put(fetchCitiesResult(false, []));
-			return;			
+			return;
 		}
 
 		const response = yield call(getCitiesByCountryApi, countryId);
@@ -126,7 +128,23 @@ function* fetchCitiesSaga(action: FetchCitiesAction) {
 	} catch (e) {
 		yield put(fetchCitiesResult(true));
 	} finally {
-		}
+	}
+}
+
+function* uploadFileSaga(action: ChangeDraftFileAction) {
+	try {
+		const { file } = action;
+
+		if (!file)
+			return;
+
+		const response = yield call(uploadAttachmentApi, file!);
+
+		yield put(uploadFileResult(false, response.data.attachmentId, response.data.attachmentTitle, response.data.attachmentContent));
+	} catch (e) {
+		yield put(uploadFileResult(true));
+	} finally {
+	}
 }
 
 export default [
@@ -137,5 +155,6 @@ export default [
 	takeLatest(ActionTypes.update_camp, updateCampSaga),
 	takeLatest(ActionTypes.delete_camp, deleteCampSaga),
 	takeLatest(ActionTypes.fetch_cities, fetchCitiesSaga),
+	takeLatest(ActionTypes.change_draft_file, uploadFileSaga),
 ];
 

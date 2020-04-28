@@ -135,6 +135,10 @@ export type Action =
         lastName: string;
 		company: string;
 		middleName: string;
+		file?: File;
+		serverFileId?: string;
+		fileTitle?: string;
+		attachmentContent?: string
 	}
 	
 	export interface SearchCriteria{

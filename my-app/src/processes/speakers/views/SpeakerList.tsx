@@ -17,6 +17,7 @@ const SpeakerList = (props: Props) => {
                     <th>Middle Name</th>
                     <th>Last Name</th>
                     <th>Company</th>
+                    <th>Image</th>
                     <th />
                 </tr>
             </thead>
@@ -28,6 +29,7 @@ const SpeakerList = (props: Props) => {
                             <td>{speaker.middleName}</td>
                             <td>{speaker.lastName}</td>
                             <td>{speaker.company}</td>
+                            <td>{speaker.fileTitle}</td>
                             <td>
                                 <button
                                     className="btn btn-outline-secondary"
