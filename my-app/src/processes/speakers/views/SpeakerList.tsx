@@ -29,7 +29,9 @@ const SpeakerList = (props: Props) => {
                             <td>{speaker.middleName}</td>
                             <td>{speaker.lastName}</td>
                             <td>{speaker.company}</td>
-                            <td>{speaker.fileTitle}</td>
+                            <td>
+                            <img src={`data:image/png;base64,${speaker.attachmentContent}`} style={{ height: '50px', width: '50px' }} />
+                            </td>
                             <td>
                                 <button
                                     className="btn btn-outline-secondary"

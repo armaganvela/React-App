@@ -32,7 +32,7 @@ const CampList = (props: Props) => {
                     return (
                         <tr key={camp.id}>
                             <td>
-                                <a href='#' onClick={(e: any) => { e.preventDefault(); onRedirectToTalks(camp.moniker)}}>
+                                <a href='#' onClick={(e: any) => { e.preventDefault(); onRedirectToTalks(camp.moniker) }}>
                                     {camp.name}
                                 </a>
                             </td>
@@ -41,7 +41,9 @@ const CampList = (props: Props) => {
                             <td>{camp.city?.name}</td>
                             <td>{camp.eventDate ? moment(camp.eventDate).format('L') : ''}</td>
                             <td>{camp.location?.lat + ',' + camp.location?.lng}</td>
-                            <td>{camp.fileTitle}</td>
+                            <td>
+                                <img src={`data:image/png;base64,${camp.attachmentContent}`} style={{ height: '50px', width: '50px' }} />
+                            </td>
                             <td>
                                 <button
                                     className="btn btn-outline-danger"

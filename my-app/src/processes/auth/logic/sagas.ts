@@ -29,6 +29,7 @@ function* signInSaga() {
 			put(loginResult(false)),
 			put(changeAccessToken(access_token)),
 			put(changeIsLoggedIn(true)),
+			yield put(showAlert('success', 'You are successfully logged in', 'You are successfully logged in')),
 		]);
 
 		history.push('/');
