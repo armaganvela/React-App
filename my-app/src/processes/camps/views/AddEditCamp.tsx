@@ -153,7 +153,7 @@ const AddEditCamp = () => {
                     <GoogleMapComponent
                         label="Location"
                         location={location}
-                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsVEt7az6zvhO-yXgvLiVJdRUTfp12eNI"
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
                         loadingElement={<div style={{ height: `100%` }} />}
                         containerElement={<div style={{ height: `400px`, marginTop: '10px', marginBottom: '30px' }} />}
                         mapElement={<div style={{ height: `100%` }} />}
