@@ -9,7 +9,7 @@ interface Props {
 
 const GoogleMapComponent = withScriptjs(withGoogleMap((props: Props) => {
     return <GoogleMap
-        defaultZoom={8}
+        defaultZoom={3}
         defaultCenter={{ ...props.location }}
         onClick={props.onClick}
     >
